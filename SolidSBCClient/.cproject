@@ -50,7 +50,7 @@
 <option id="gnu.cpp.link.option.libs.320874730" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="SolidSBCSDK"/>
 </option>
-<option id="gnu.cpp.link.option.paths.1172170035" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+<option id="gnu.cpp.link.option.paths.1172170035" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SolidSBCSDK/Debug}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1625660984" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -530,7 +530,7 @@
 <option id="gnu.cpp.link.option.libs.1522225265" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 <listOptionValue builtIn="false" value="SolidSBCSDK"/>
 </option>
-<option id="gnu.cpp.link.option.paths.396945821" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
+<option id="gnu.cpp.link.option.paths.396945821" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 <listOptionValue builtIn="false" value="&quot;${workspace_loc:/SolidSBCSDK/Release}&quot;"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1212261186" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
