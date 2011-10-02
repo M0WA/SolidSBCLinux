@@ -5,10 +5,12 @@
  *      Author: Moritz Wagner
  */
 
-#include "../client/CSolidSBCClient.h"
-#include "../helper/CSolidSBCLogging.h"
+#include "../log/CSolidSBCLogging.h"
 
+/*
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
+*/
+#include "../test/CSolidSBCTestConfig.h"
 
 #include "CSolidSBCSocketConfig.h"
 #include "CSolidSBCPacket.h"
@@ -24,14 +26,17 @@ CSolidSBCSocketConfig::~CSolidSBCSocketConfig()
 {
 }
 
-void CSolidSBCSocketConfig::GetConfigsFromServer(void)
+void CSolidSBCSocketConfig::GetConfigsFromServer(const std::string& sClientName, const std::string& sUuid)
 {
 	//check if we are already fetching configs
 	if(!m_bFinished)
 		return;
 
+	m_sClientName = sClientName;
+	m_sUuid = sUuid;
+
 	//send config request
-	CSolidSBCPacketConfigRequest configRequest(CSolidSBCClient::GetInstance()->GetClientName(),CSolidSBCClient::GetInstance()->GetUuid());
+	CSolidSBCPacketConfigRequest configRequest(sClientName,sUuid);
 	configRequest.SendPacket(this);
 
 	CSolidSBCSocket::Read((CSolidSBCSocket::OnReadCallback)&CSolidSBCSocketConfig::ReadHeaderCallback, sizeof(CSolidSBCPacket::SSBC_PACKET_HEADER));
@@ -50,7 +55,7 @@ void* CSolidSBCSocketConfig::OnConnect(const CSolidSBCSocket::_SSBC_SOCKET_CONNE
 		pConfigSocket->Close();
 		return 0;}
 
-	pConfigSocket->GetConfigsFromServer();
+	pConfigSocket->GetConfigsFromServer(pConfigSocket->m_sClientName,pConfigSocket->m_sUuid);
 	return 0;
 }
 
@@ -68,21 +73,33 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 		{
 			CSolidSBCPacket* pPacket = CSolidSBCPacket::ReadPacket(*pHeader,pConfigSocket);
 			if (!pPacket) {
+				//TODO: interface to client
+				/*
 				CSolidSBCClient::GetInstance()->OnConfigError();
+				*/
 				break; }
 			else {
 				std::string sConfigXml = pPacket->ToString();
 				if (sConfigXml == ""){
+					//TODO: interface to client
+					/*
 					CSolidSBCClient::GetInstance()->OnConfigError();
+					*/
 					break;}
 
+				//TODO: interface to client
+				/*
 				CSolidSBCClient::GetInstance()->OnConfigSuccess(sConfigXml);
+				*/
 				pConfigSocket->Read((CSolidSBCSocket::OnReadCallback)&CSolidSBCSocketConfig::ReadHeaderCallback,sizeof(CSolidSBCPacket::SSBC_PACKET_HEADER));
 
 #ifdef _DEBUG
 				std::string sTestName  = CSolidSBCTestConfig::GetTestNameFromXML(sConfigXml);
 				if (sTestName == ""){
+					//TODO: interface to client
+					/*
 					CSolidSBCClient::GetInstance()->OnConfigError();
+					*/
 					break;}
 
 				g_cLogging.Log(_SSBC_LOG_DEBUG,"dumping config for \"" + sTestName +"\" reply:\n" + sConfigXml);
@@ -94,7 +111,10 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 	case SSBC_SOCKET_READ_STATE_FAILED:
 	case SSBC_SOCKET_READ_STATE_WAIT:
 	default:
+		//TODO: interface to client
+		/*
 		CSolidSBCClient::GetInstance()->OnConfigError();
+		*/
 		break;
 	}
 }

@@ -7,7 +7,7 @@
 
 #include "CSolidSBCClient.h"
 
-#include "../helper/CSolidSBCLogging.h"
+#include "../../../SolidSBCSDK/src/log/CSolidSBCLogging.h"
 
 CSolidSBCClient* g_pSolidSBCClientInstance = 0;
 
