@@ -19,4 +19,6 @@
 #define SSBC_DEFAULT_LIBRARY_PATH "libs/"
 #define SSBC_DEFAULT_UUID_FILE    "ssbc.uuid"
 
+#include "lang/SolidSBCLang.h"
+
 #endif /* DEFINES_H_ */

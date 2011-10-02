@@ -11,7 +11,6 @@
 #include <string>
 #include <fstream>
 
-#include "../lang/SolidSBCLang.h"
 #include "../../../SolidSBCSDK/src/thread/CSolidSBCMutex.h"
 
 typedef enum

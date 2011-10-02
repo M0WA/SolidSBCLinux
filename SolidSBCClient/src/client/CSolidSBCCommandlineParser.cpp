@@ -7,7 +7,7 @@
 
 #include "../defines.h"
 #include "CSolidSBCCommandlineParser.h"
-#include "../helper/CSolidSBCLogging.h"
+#include "../../../SolidSBCSDK/src/log/CSolidSBCLogging.h"
 
 #include <iostream>
 

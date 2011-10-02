@@ -10,7 +10,7 @@
 
 #include "defines.h"
 #include "client/CSolidSBCClient.h"
-#include "helper/CSolidSBCLogging.h"
+#include "../../SolidSBCSDK/src/log/CSolidSBCLogging.h"
 #ifdef _DEBUG
 	#include "helper/CSolidSBCDebugging.h"
 #endif

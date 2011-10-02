@@ -16,7 +16,7 @@
 
 extern int errno;
 
-#include "../helper/CSolidSBCLogging.h"
+#include "../log/CSolidSBCLogging.h"
 
 #define SOCKET_READ_BUFFER_SIZE 255
 
