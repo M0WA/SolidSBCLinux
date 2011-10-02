@@ -51,6 +51,7 @@
 <listOptionValue builtIn="false" value="xml2"/>
 <listOptionValue builtIn="false" value="pthread"/>
 </option>
+<option id="gnu.cpp.link.option.paths.215491447" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths"/>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.611916141" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 <additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 <additionalInput kind="additionalinput" paths="$(LIBS)"/>

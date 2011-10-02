@@ -6,8 +6,9 @@
  */
 
 #include "../client/CSolidSBCClient.h"
-#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 #include "../helper/CSolidSBCLogging.h"
+
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
 #include "CSolidSBCSocketConfig.h"
 #include "CSolidSBCPacket.h"
