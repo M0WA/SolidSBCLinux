@@ -19,14 +19,14 @@ CSolidSBCClient::CSolidSBCClient(int argc, const char** argv)
 	g_pSolidSBCClientInstance = this;
 
 	ParseCommandline(argc, argv);
-	m_pUuidManager = new CSolidSBCUuidManager(GetUuidFile());
-	m_pTestManager = new CSolidSBCTestManager(GetTestLibraryPath());
+	m_pUuidManager        = new CSolidSBCUuidManager(GetUuidFile());
+	m_pTestLibraryManager = new CSolidSBCTestLibraryManager(GetTestLibraryPath());
 }
 
 CSolidSBCClient::~CSolidSBCClient()
 {
-	delete m_pTestManager;
-	m_pTestManager = 0;
+	delete m_pTestLibraryManager;
+	m_pTestLibraryManager = 0;
 
 	delete m_pUuidManager;
 	m_pUuidManager = 0;
@@ -66,11 +66,10 @@ void CSolidSBCClient::OnShutdown(void)
 bool CSolidSBCClient::StartTests(void)
 {
 	std::vector<std::string> vecTestConfigStrings = m_configSocket.GetTestConfigStrings();
-
 	std::vector<std::string>::iterator iIter      = vecTestConfigStrings.begin();
 	for(; iIter != vecTestConfigStrings.end(); iIter++)
 	{
-		if (!CSolidSBCTestManager::GetInstance()->StartTestFromConfig(*iIter))
+		if (!CSolidSBCTestLibraryManager::GetInstance()->StartTestFromConfig(*iIter))
 		{
 			//TODO:handle this error
 		}
@@ -86,6 +85,8 @@ bool CSolidSBCClient::InitTestConfigs(void)
 	nState = m_configSocket.Connect(
 					GetConfigServerHost(),
 					GetConfigServerPort(),
+					GetClientName(),
+					GetUuid(),
 					(CSolidSBCSocket::OnConnectCallback) &CSolidSBCSocketConfig::OnConnect);
 
 	if (
@@ -93,37 +94,22 @@ bool CSolidSBCClient::InitTestConfigs(void)
 		(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_WAIT)
 	   )
 	{
-		while (!m_configSocket.IsFinished())
+		int nTimeout = 30; //wait 30 sec max to receive configs
+		while (!m_configSocket.IsFinished() && nTimeout) {
 			sleep(1);
+			nTimeout--;}
+
+		if(!m_configSocket.IsFinished())
+			m_configSocket.Close();
 
 		std::vector<std::string> vecTestConfigStrings =  m_configSocket.GetTestConfigStrings();
-		if (!vecTestConfigStrings.size())
-			return false;
+		if (!vecTestConfigStrings.size()) {
+			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
+			return false; }
 
 		return true;
 	}
-	else
-		return false;
-}
-
-/*
-void CSolidSBCClient::OnConfigSuccess(const std::string& sConfigXml)
-{
-	if (!CSolidSBCTestManager::GetInstance()->StartTestFromConfig(sConfigXml))
-	{
-		//TODO:handle this error
-	}
-}
-
-void CSolidSBCClient::OnConfigError(void) const
-{
-	//not an error if CSolidSBCClient::OnConfigSuccess
-	//has at least been called once.
-	//then at least one config has been fetched from the
-	//server...
-
-	//TODO: check if this is an error or not, implement more/specific information on connect error
-	//if (!m_vecTestConfigs.size())
+	else {
 		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
+		return false;}
 }
-*/

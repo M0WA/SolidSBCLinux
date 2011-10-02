@@ -18,8 +18,10 @@ class CSolidSBCSocketConfig: public CSolidSBCSocket
 public:
 	CSolidSBCSocketConfig();
 	virtual ~CSolidSBCSocketConfig();
+	virtual void Close(void);
+	virtual _SSBC_SOCKET_CONNECT_STATE Connect(const std::string& sHost, const short nPort, const std::string& sClientName, const std::string& sUuid, OnConnectCallback pCallback = 0);
 
-	void GetConfigsFromServer(const std::string& sClientName, const std::string& sUuid);
+	void GetConfigsFromServer(void);
 
 	std::vector<std::string> GetTestConfigStrings(void) const { return m_vecTestConfigs; }
 	unsigned int             GetTestConfigErrors (void) const { return m_nErrorCount;    }

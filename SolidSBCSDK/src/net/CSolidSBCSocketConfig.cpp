@@ -23,7 +23,7 @@ CSolidSBCSocketConfig::~CSolidSBCSocketConfig()
 {
 }
 
-void CSolidSBCSocketConfig::GetConfigsFromServer(const std::string& sClientName, const std::string& sUuid)
+void CSolidSBCSocketConfig::GetConfigsFromServer(void)
 {
 	//check if we are already fetching configs
 	if(!IsFinished())
@@ -32,11 +32,8 @@ void CSolidSBCSocketConfig::GetConfigsFromServer(const std::string& sClientName,
 	m_vecTestConfigs.clear();
 	m_nErrorCount = 0;
 
-	m_sClientName = sClientName;
-	m_sUuid = sUuid;
-
 	//send config request
-	CSolidSBCPacketConfigRequest configRequest(sClientName,sUuid);
+	CSolidSBCPacketConfigRequest configRequest(m_sClientName,m_sUuid);
 	configRequest.SendPacket(this);
 
 	CSolidSBCSocket::Read((CSolidSBCSocket::OnReadCallback)&CSolidSBCSocketConfig::ReadHeaderCallback, sizeof(CSolidSBCPacket::SSBC_PACKET_HEADER));
@@ -55,7 +52,7 @@ void* CSolidSBCSocketConfig::OnConnect(const CSolidSBCSocket::_SSBC_SOCKET_CONNE
 		pConfigSocket->Close();
 		return 0;}
 
-	pConfigSocket->GetConfigsFromServer(pConfigSocket->m_sClientName,pConfigSocket->m_sUuid);
+	pConfigSocket->GetConfigsFromServer();
 	return 0;
 }
 
@@ -102,4 +99,17 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 		pConfigSocket->m_nErrorCount++;
 		break;
 	}
+}
+
+void CSolidSBCSocketConfig::Close(void)
+{
+	m_bFinished = true;
+	CSolidSBCSocket::Close();
+}
+
+CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE CSolidSBCSocketConfig::Connect(const std::string& sHost, const short nPort, const std::string& sClientName, const std::string& sUuid, OnConnectCallback pCallback)
+{
+	m_sClientName = sClientName;
+	m_sUuid       = sUuid;
+	return CSolidSBCSocket::Connect(sHost, nPort, pCallback);
 }

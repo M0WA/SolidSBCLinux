@@ -103,9 +103,10 @@ public:
 	virtual ~CSolidSBCSocket();
 	virtual void Close(void);
 
-	_SSBC_SOCKET_CONNECT_STATE Connect(const std::string& sHost, const short nPort, OnConnectCallback pCallback = 0);
+	virtual _SSBC_SOCKET_CONNECT_STATE Connect(const std::string& sHost, const short nPort, OnConnectCallback pCallback = 0);
 
 protected:
+
 	void Read(OnReadCallback pCallback, int nReadBytes = 0);
 	int  Send(unsigned char* pcPacket,  int nSendBytes);
 

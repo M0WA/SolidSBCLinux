@@ -12,7 +12,7 @@
 #include "../../../SolidSBCSDK/src/net/CSolidSBCSocketResult.h"
 
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
-#include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestLibraryManager.h"
 
 #include "../helper/CSolidSBCUuidManager.h"
 #include "../helper/CSolidSBCHostName.h"
@@ -29,11 +29,6 @@ public:
 	bool Start(void);
 	void Stop(void);
 
-	/*
-	void OnConfigSuccess(const std::string& sConfigXml);
-	void OnConfigError(void) const;
-	*/
-
 	void OnShutdown(void);
 
 	std::string GetClientName(void) const { return CSolidSBCHostName::GetHostName(); };
@@ -48,8 +43,8 @@ private:
 	CSolidSBCSocketConfig m_configSocket;
 	CSolidSBCSocketResult m_resultSocket;
 
-	CSolidSBCUuidManager* m_pUuidManager;
-	CSolidSBCTestManager* m_pTestManager;
+	CSolidSBCUuidManager*        m_pUuidManager;
+	CSolidSBCTestLibraryManager* m_pTestLibraryManager;
 };
 
 #endif /* CSOLIDSBCCLIENT_H_ */
