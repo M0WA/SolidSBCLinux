@@ -3,6 +3,7 @@
 	<name>SolidSBCTestLib</name>
 	<comment></comment>
 	<projects>
+		<project>SolidSBCSDK</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

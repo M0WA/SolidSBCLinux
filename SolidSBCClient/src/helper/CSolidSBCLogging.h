@@ -12,7 +12,7 @@
 #include <fstream>
 
 #include "../lang/SolidSBCLang.h"
-#include "../thread/CSolidSBCMutex.h"
+#include "../../../SolidSBCSDK/src/thread/CSolidSBCMutex.h"
 
 typedef enum
 {

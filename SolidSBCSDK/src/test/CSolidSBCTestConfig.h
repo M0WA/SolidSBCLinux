@@ -11,7 +11,7 @@
 #include <string>
 #include <map>
 
-#include "../helper/CSolidSBCXmlFile.h"
+#include "../xml/CSolidSBCXmlFile.h"
 
 class CSolidSBCTestConfig
 {

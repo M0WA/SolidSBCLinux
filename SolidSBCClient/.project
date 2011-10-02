@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>SolidSBCClientLinux</name>
+	<name>SolidSBCClient</name>
 	<comment></comment>
 	<projects>
+		<project>SolidSBCSDK</project>
+		<project>SolidSBCTestLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

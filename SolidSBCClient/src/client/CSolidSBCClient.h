@@ -11,8 +11,8 @@
 #include "../net/CSolidSBCSocketConfig.h"
 #include "../net/CSolidSBCSocketResult.h"
 
-#include "../test/CSolidSBCTestConfig.h"
-#include "../test/CSolidSBCTestManager.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
 
 #include "../helper/CSolidSBCUuidManager.h"
 #include "../helper/CSolidSBCHostName.h"

@@ -12,7 +12,7 @@
 #include <vector>
 #include <sys/socket.h>
 
-#include "../thread/CSolidSBCThread.h"
+#include "../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 
 //forward declarations
 class CSolidSBCPacket;
