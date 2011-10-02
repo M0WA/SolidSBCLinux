@@ -8,8 +8,8 @@
 #ifndef CSOLIDSBCCLIENT_H_
 #define CSOLIDSBCCLIENT_H_
 
-#include "../net/CSolidSBCSocketConfig.h"
-#include "../net/CSolidSBCSocketResult.h"
+#include "../../../SolidSBCSDK/src/net/CSolidSBCSocketConfig.h"
+#include "../../../SolidSBCSDK/src/net/CSolidSBCSocketResult.h"
 
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
