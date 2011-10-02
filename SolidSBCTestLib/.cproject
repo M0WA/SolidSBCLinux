@@ -24,7 +24,7 @@
 <folderInfo id="cdt.managedbuild.config.gnu.so.debug.134435452." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.so.debug.1021108246" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.so.debug">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.so.debug.1443228729" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.so.debug"/>
-<builder buildPath="${workspace_loc:/SolidSBCTestLib/Debug}" id="cdt.managedbuild.target.gnu.builder.so.debug.1223868190" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.so.debug"/>
+<builder arguments="-j3" buildPath="${workspace_loc:/SolidSBCTestLib/Debug}" command="make" id="cdt.managedbuild.target.gnu.builder.so.debug.1223868190" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.so.debug"/>
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.196832765" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug.995320171" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.debug">
 <option id="gnu.cpp.compiler.so.debug.option.optimization.level.1918493670" name="Optimization Level" superClass="gnu.cpp.compiler.so.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
@@ -32,7 +32,7 @@
 <option id="gnu.cpp.compiler.option.preprocessor.def.1968779530" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 <listOptionValue builtIn="false" value="_DEBUG"/>
 </option>
-<option id="gnu.cpp.compiler.option.include.paths.1768567257" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<option id="gnu.cpp.compiler.option.include.paths.1768567257" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.479114415" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
@@ -505,12 +505,12 @@
 <folderInfo id="cdt.managedbuild.config.gnu.so.release.170021876." name="/" resourcePath="">
 <toolChain id="cdt.managedbuild.toolchain.gnu.so.release.1961161518" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.so.release">
 <targetPlatform id="cdt.managedbuild.target.gnu.platform.so.release.1474473417" name="Debug Platform" superClass="cdt.managedbuild.target.gnu.platform.so.release"/>
-<builder buildPath="${workspace_loc:/SolidSBCTestLib/Release}" id="cdt.managedbuild.target.gnu.builder.so.release.144247256" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.so.release"/>
+<builder arguments="-j3" buildPath="${workspace_loc:/SolidSBCTestLib/Release}" command="make" id="cdt.managedbuild.target.gnu.builder.so.release.144247256" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="cdt.managedbuild.target.gnu.builder.so.release"/>
 <tool id="cdt.managedbuild.tool.gnu.archiver.base.941302248" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base"/>
 <tool id="cdt.managedbuild.tool.gnu.cpp.compiler.so.release.1764194263" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.so.release">
 <option id="gnu.cpp.compiler.so.release.option.optimization.level.752985837" name="Optimization Level" superClass="gnu.cpp.compiler.so.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 <option id="gnu.cpp.compiler.so.release.option.debugging.level.1234006228" name="Debug Level" superClass="gnu.cpp.compiler.so.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
-<option id="gnu.cpp.compiler.option.include.paths.165420829" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+<option id="gnu.cpp.compiler.option.include.paths.165420829" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 <listOptionValue builtIn="false" value="/usr/include/libxml2"/>
 </option>
 <inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1119595086" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>

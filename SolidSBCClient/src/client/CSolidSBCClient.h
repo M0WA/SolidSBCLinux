@@ -19,7 +19,7 @@
 
 #include "CSolidSBCCommandlineParser.h"
 
-class CSolidSBCClient;
+//class CSolidSBCClient;
 class CSolidSBCClient : public CSolidSBCCommandlineParser
 {
 public:
@@ -29,8 +29,10 @@ public:
 	bool Start(void);
 	void Stop(void);
 
+	/*
 	void OnConfigSuccess(const std::string& sConfigXml);
 	void OnConfigError(void) const;
+	*/
 
 	void OnShutdown(void);
 
@@ -40,6 +42,9 @@ public:
 	static CSolidSBCClient* GetInstance(void);
 
 private:
+	bool InitTestConfigs(void);
+	bool StartTests(void);
+
 	CSolidSBCSocketConfig m_configSocket;
 	CSolidSBCSocketResult m_resultSocket;
 
