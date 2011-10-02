@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-#include "../helper/CSolidSBCStringConverter.h"
+#include "../string/CSolidSBCStringConverter.h"
 
 #include "CSolidSBCPacket.h"
 #include "CSolidSBCSocket.h"

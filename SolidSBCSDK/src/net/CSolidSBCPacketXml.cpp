@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "CSolidSBCPacketXml.h"
-#include "../helper/CSolidSBCStringConverter.h"
+#include "../string/CSolidSBCStringConverter.h"
 
 CSolidSBCPacketXml::CSolidSBCPacketXml(const CSolidSBCPacket::SSBC_PACKET_TYPE nType)
 : CSolidSBCPacket()

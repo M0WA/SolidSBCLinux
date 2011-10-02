@@ -8,7 +8,6 @@
 #ifndef CSOLIDSBCPACKETXML_H_
 #define CSOLIDSBCPACKETXML_H_
 
-#include "../helper/CSolidSBCStringConverter.h"
 #include "CSolidSBCPacket.h"
 
 class CSolidSBCPacketXml : public CSolidSBCPacket
