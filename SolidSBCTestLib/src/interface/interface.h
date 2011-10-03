@@ -8,7 +8,7 @@
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
 
-#include "../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
 
 extern "C" CSolidSBCTestManager* GetSolidSBCTestManager(void);
 

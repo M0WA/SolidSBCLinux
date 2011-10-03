@@ -8,7 +8,7 @@
 #ifndef CSOLIDSBCTESTMANAGERIMPL_H_
 #define CSOLIDSBCTESTMANAGERIMPL_H_
 
-#include "../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
 
 class CSolidSBCTestManagerImpl : public CSolidSBCTestManager
 {

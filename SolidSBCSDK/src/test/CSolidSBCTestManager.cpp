@@ -14,3 +14,7 @@ CSolidSBCTestManager::CSolidSBCTestManager()
 CSolidSBCTestManager::~CSolidSBCTestManager()
 {
 }
+
+void CSolidSBCTestManager::GetTestNames(std::vector<std::string>& vecTestNames)
+{
+}

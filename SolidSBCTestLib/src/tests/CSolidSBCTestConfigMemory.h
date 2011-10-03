@@ -8,7 +8,7 @@
 #ifndef CSOLIDSBCMEMORYTESTCONFIG_H_
 #define CSOLIDSBCMEMORYTESTCONFIG_H_
 
-#include "../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
+#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
 class CSolidSBCTestConfigMemory : public CSolidSBCTestConfig
 {

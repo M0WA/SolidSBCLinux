@@ -7,13 +7,8 @@
 
 #include "CSolidSBCTestLibraryManager.h"
 
-
 #include <dirent.h>
 #include <dlfcn.h>
-#include <map>
-#include <string>
-
-typedef void* (*PGET_SOLIDSBC_TESTS_FUNC)(void);
 
 CSolidSBCTestLibraryManager* g_pTestLibraryManagerInstance = 0;
 
@@ -21,20 +16,33 @@ CSolidSBCTestLibraryManager::CSolidSBCTestLibraryManager(const std::string& sLib
 : m_sLibraryPath(sLibraryPath)
 {
 	g_pTestLibraryManagerInstance = this;
-	LoadTestLibraries();
+	LoadAllLibraries();
 }
 
 CSolidSBCTestLibraryManager::~CSolidSBCTestLibraryManager()
 {
+	UnloadAllLibraries();
 	g_pTestLibraryManagerInstance = 0;
 }
 
-void CSolidSBCTestLibraryManager::LoadTestLibraries(void)
+void CSolidSBCTestLibraryManager::UnloadAllLibraries(void)
 {
+	std::map<CSolidSBCTestManager*,void*>::iterator iIter =	m_mapTestManagerLibHandle.begin();
+	for(;iIter != m_mapTestManagerLibHandle.end(); iIter++)
+	{
+		//TODO: stop all test before unloading of library
+		//iIter->first->StopAllTest();
+		dlclose(iIter->second);
+	}
+	m_mapTestManagerLibHandle.clear();
 	m_mapTestNamesThreadFunc.clear();
+}
+
+void CSolidSBCTestLibraryManager::LoadAllLibraries(void)
+{
+	UnloadAllLibraries();
 
 	int nLoadedLibraries = 0;
-	int nAvailableTests  = 0;
 
     DIR *dir = opendir(m_sLibraryPath.c_str());
     if(dir)
@@ -46,10 +54,7 @@ void CSolidSBCTestLibraryManager::LoadTestLibraries(void)
         	{
         	case DT_REG: //is a file
 				{
-					std::map<std::string,void*> mapSubTestNamesThreadFuncs;
-					if( !TryLoadLibrary(ent->d_name, mapSubTestNamesThreadFuncs) ) {
-						m_mapTestNamesThreadFunc.insert(mapSubTestNamesThreadFuncs.begin(),mapSubTestNamesThreadFuncs.end());
-						nAvailableTests += mapSubTestNamesThreadFuncs.size();
+					if( !TryLoadLibrary(ent->d_name) ) {
 						nLoadedLibraries++;}
 				}
         		break;
@@ -67,27 +72,30 @@ void CSolidSBCTestLibraryManager::LoadTestLibraries(void)
     }
 }
 
-bool CSolidSBCTestLibraryManager::TryLoadLibrary(const std::string& sLibraryFileName, std::map<std::string,void*>& mapTestNamesThreadFuncs)
+bool CSolidSBCTestLibraryManager::TryLoadLibrary(const std::string& sLibraryFileName)
 {
 	void *handle = dlopen (sLibraryFileName.c_str(), RTLD_NOW);
 	if (!handle) {
 		return false;
 	}
 
-	PGET_SOLIDSBC_TESTS_FUNC GetSolidSBCTests = (PGET_SOLIDSBC_TESTS_FUNC)dlsym(handle, "GetSolidSBCTestManager");
+	CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC GetSolidSBCTestManager = (CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC)dlsym(handle, "GetSolidSBCTestManager");
 	char *error;
-	if ((error = dlerror()) != NULL)  {
+	if ( !GetSolidSBCTestManager || ((error = dlerror()) != NULL) ) {
 		dlclose(handle);
 		return false;
 	}
 
-	void* retFunc = GetSolidSBCTests();
-	if (!retFunc){
+	CSolidSBCTestManager* pTestManager = GetSolidSBCTestManager();
+	if (!pTestManager){
 		dlclose(handle);
 		return false;
 	}
 
-	mapTestNamesThreadFuncs = *((std::map<std::string,void*>*)retFunc);
+	m_mapTestManagerLibHandle[pTestManager] = handle;
+
+	//TODO: enumerate test names and thread functions to map
+	//m_mapTestNamesThreadFunc.insert(mapSubTestNamesThreadFuncs.begin(),mapSubTestNamesThreadFuncs.end());
 	return true;
 }
 
