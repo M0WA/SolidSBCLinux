@@ -32,6 +32,7 @@ public:
 		return false;
 	}
 
+	void SetXml(const std::string& sXml) {m_sXmlString = sXml;}
 	std::string GetTestName(void) const { return m_sTestname; };
 	std::string GenerateXML(void);
 
@@ -39,6 +40,7 @@ public:
 	bool IsValid(void) { return true; }
 
 	static std::string GetTestNameFromXML(const std::string& strXml);
+
 protected:
 	//register your attributes
 	//by calling RegisterXPathByAttributeName for each attribute

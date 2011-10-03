@@ -12,7 +12,7 @@
 #include "client/CSolidSBCClient.h"
 #include "../../SolidSBCSDK/src/log/CSolidSBCLogging.h"
 #ifdef _DEBUG
-	#include "helper/CSolidSBCDebugging.h"
+	#include "../../SolidSBCSDK/src/debug/CSolidSBCDebugging.h"
 #endif
 
 using namespace std;

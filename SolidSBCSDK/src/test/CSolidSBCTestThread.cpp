@@ -7,11 +7,8 @@
 
 #include "CSolidSBCTestThread.h"
 
-CSolidSBCTestThread::CSolidSBCTestThread()
-//
-//TODO: this WILL crash and do nothing
-//
-: CSolidSBCThread(0,0,0)
+CSolidSBCTestThread::CSolidSBCTestThread(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig)
+: CSolidSBCThread(pThreadFunc,pTestConfig,false)
 {
 }
 

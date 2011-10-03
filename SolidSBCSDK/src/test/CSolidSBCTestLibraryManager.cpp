@@ -9,6 +9,7 @@
 
 #include <dirent.h>
 #include <dlfcn.h>
+#include <vector>
 
 CSolidSBCTestLibraryManager* g_pTestLibraryManagerInstance = 0;
 
@@ -35,7 +36,6 @@ void CSolidSBCTestLibraryManager::UnloadAllLibraries(void)
 		dlclose(iIter->second);
 	}
 	m_mapTestManagerLibHandle.clear();
-	m_mapTestNamesThreadFunc.clear();
 }
 
 void CSolidSBCTestLibraryManager::LoadAllLibraries(void)
@@ -93,15 +93,25 @@ bool CSolidSBCTestLibraryManager::TryLoadLibrary(const std::string& sLibraryFile
 	}
 
 	m_mapTestManagerLibHandle[pTestManager] = handle;
-
-	//TODO: enumerate test names and thread functions to map
-	//m_mapTestNamesThreadFunc.insert(mapSubTestNamesThreadFuncs.begin(),mapSubTestNamesThreadFuncs.end());
 	return true;
 }
 
 bool CSolidSBCTestLibraryManager::StartTestFromConfig(const std::string& sConfigXml)
 {
-	//TODO: implement CSolidSBCTestLibraryManager::StartTestFromConfig
+	std::string sTestName = CSolidSBCTestConfig::GetTestNameFromXML(sConfigXml);
+	if(sTestName.empty())
+		return false;
+
+	std::map<CSolidSBCTestManager*,void*>::iterator iIter = m_mapTestManagerLibHandle.begin();
+	for(; iIter != m_mapTestManagerLibHandle.end(); iIter++)
+	{
+		if(iIter->first->HasTest(sTestName))
+		{
+			iIter->first->StartTestByName(sTestName, sConfigXml);
+			return true;
+		}
+	}
+
 	return false;
 }
 

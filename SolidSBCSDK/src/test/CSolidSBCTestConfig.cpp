@@ -35,6 +35,9 @@ std::string CSolidSBCTestConfig::GetTestNameFromXML(const std::string& strXml)
 
 void CSolidSBCTestConfig::Init(void)
 {
+	if(m_pXmlFile)
+		delete m_pXmlFile;
+
 	if ( !m_sXmlString.empty() ) {
 		m_pXmlFile = new CSolidSBCXmlFile(m_sXmlString); }
 	else {

@@ -33,7 +33,6 @@ public:
 
 private:
 	std::map<CSolidSBCTestManager*,void*> m_mapTestManagerLibHandle;
-	std::map<std::string,void*>           m_mapTestNamesThreadFunc;
 	std::string                           m_sLibraryPath;
 };
 

@@ -119,7 +119,7 @@ protected:
 private:
 	void SetBlockingMode( const bool bIsBlocking );
 
-	void RegisterCallback       (ThreadFunction pFunction, _PSSBC_SOCKET_PARAM pParam, bool bAutoDelete = true);
+	void RegisterCallback       (CSolidSBCThread::ThreadFunction pFunction, _PSSBC_SOCKET_PARAM pParam, bool bAutoDelete = true);
 	void RegisterConnectCallback(OnConnectCallback pCallback);
 	void RegisterReadCallback   (OnReadCallback pCallback, int nReadBytes = 0);
 

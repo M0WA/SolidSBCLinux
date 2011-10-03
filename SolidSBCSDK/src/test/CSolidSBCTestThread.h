@@ -9,11 +9,12 @@
 #define CSOLIDSBCTESTTHREAD_H_
 
 #include "../thread/CSolidSBCThread.h"
+#include "CSolidSBCTestConfig.h"
 
 class CSolidSBCTestThread : public CSolidSBCThread
 {
 public:
-	CSolidSBCTestThread();
+	CSolidSBCTestThread(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig);
 	virtual ~CSolidSBCTestThread();
 };
 

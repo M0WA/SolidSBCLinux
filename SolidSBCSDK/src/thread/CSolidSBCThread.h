@@ -10,8 +10,6 @@
 
 #include <pthread.h>
 
-typedef void* (*ThreadFunction)(void*);
-
 typedef struct {
 	bool* pbShallEnd;
 	void* pParam;
@@ -20,6 +18,8 @@ typedef struct {
 class CSolidSBCThread
 {
 public:
+	typedef void* (*ThreadFunction)(void*);
+
 	CSolidSBCThread(ThreadFunction pFunction, void* param, bool bAutoDelete = true);
 	virtual ~CSolidSBCThread();
 

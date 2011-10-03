@@ -309,7 +309,7 @@ void CSolidSBCSocket::SetBlockingMode( const bool bIsBlocking )
 	}
 }
 
-void CSolidSBCSocket::RegisterCallback(ThreadFunction pFunction, _PSSBC_SOCKET_PARAM pParam, bool bAutoDelete)
+void CSolidSBCSocket::RegisterCallback(CSolidSBCThread::ThreadFunction pFunction, _PSSBC_SOCKET_PARAM pParam, bool bAutoDelete)
 {
 	CSolidSBCThread* pThread = new CSolidSBCThread(pFunction, pParam, bAutoDelete);
 	pThread->StartThread();
@@ -325,7 +325,7 @@ void CSolidSBCSocket::RegisterConnectCallback(OnConnectCallback pCallback)
 	pConnectParam->timeout.tv_sec  = 5;
 	pConnectParam->timeout.tv_usec = 0;
 
-	RegisterCallback((ThreadFunction)&WaitForConnectThread, pConnectParam, true);
+	RegisterCallback((CSolidSBCThread::ThreadFunction)&WaitForConnectThread, pConnectParam, true);
 }
 
 void CSolidSBCSocket::RegisterReadCallback(OnReadCallback pCallback, int nReadBytes)
@@ -339,7 +339,7 @@ void CSolidSBCSocket::RegisterReadCallback(OnReadCallback pCallback, int nReadBy
 	pReadParam->timeout.tv_sec  = 5;
 	pReadParam->timeout.tv_usec = 0;
 
-	RegisterCallback((ThreadFunction)&WaitForReadThread, pReadParam, true);
+	RegisterCallback((CSolidSBCThread::ThreadFunction)&WaitForReadThread, pReadParam, true);
 }
 
 void* CSolidSBCSocket::WaitForConnectThread(_PSSBC_THREAD_PARAM param)

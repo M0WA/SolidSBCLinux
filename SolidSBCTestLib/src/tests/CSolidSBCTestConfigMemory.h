@@ -13,7 +13,7 @@
 class CSolidSBCTestConfigMemory : public CSolidSBCTestConfig
 {
 public:
-	CSolidSBCTestConfigMemory(const std::string& sXmlString);
+	CSolidSBCTestConfigMemory(const std::string& sXmlString = "");
 	~CSolidSBCTestConfigMemory();
 
 	//getter
