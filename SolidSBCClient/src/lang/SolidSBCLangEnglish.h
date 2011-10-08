@@ -18,11 +18,13 @@
 #define _SSBC_ERR_FATAL_ERROR					"a fatal error occurred. trying to shut down gracefully."
 #define _SSBC_ERR_UNGRACEFUL_SHUTDOWN			"received SIGKILL, not shutting down gracefully."
 #define _SSBC_ERR_INVALID_TESTLIB_DIR			"could not find test library directory"
+#define _SSBC_ERR_COULD_NOT_START_CLIENT		"could not start client, exiting."
 
 //warnings
 #define _SSBC_WARN_SOCKET_STILL_CONNECTED     	"socket already connected, closing previous connection"
 #define _SSBC_WARN_COULD_NOT_FIND_TEST          "test not found: "
 #define _SSBC_WARN_COULD_NOT_PARSE_TESTCONFIG   "could not parse test config xml\n"
+#define _SSBC_WARN_RETRYING_TO_START            "retrying to start client"
 
 //info
 #define _SSBC_INFO_SHUTDOWN						"shutting down gracefully."

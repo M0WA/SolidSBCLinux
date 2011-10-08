@@ -82,20 +82,18 @@ int main(int argc, char** argv)
 
 		std::stringstream ssStream;
 		ssStream << _SSBC_INFO_STARTING << " (version " << MAJOR_VERSION << "." << MINOR_VERSION << ")";
-		g_cLogging.Log(_SSBC_LOG_INFO,ssStream.str());
+		g_cLogging.Log(_SSBC_LOG_INFO, ssStream.str());
 
 		CSolidSBCClient client(argc,(const char**)argv);
-		if ( !client.Start() )
-		{
-			//TODO: give an error message here or restart if autoreconnect...
-			if(client.GetAutoReconnect())
-			{
-			}
-			else
-			{
-				return 1;
-			}
-		}
+		bool bError = false;
+		int  nTry   = 0;
+		while ( (bError = !client.Start()) && client.GetAutoReconnect() && nTry < SSBC_RETRY_RESTART_COUNT_MAX ) {
+			g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_RETRYING_TO_START);
+			nTry++; }
+
+		if(bError) {
+			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT); }
+
 		while(!g_bEnd)
 			sleep(3);
 	}

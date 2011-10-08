@@ -17,5 +17,6 @@ CSolidSBCTestThreadMemory::~CSolidSBCTestThreadMemory()
 
 void* CSolidSBCTestThreadMemory::ThreadFunc(void*)
 {
+	//TODO: implement test memory thread
 	return 0;
 }

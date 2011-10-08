@@ -19,4 +19,6 @@
 #define SSBC_DEFAULT_LIBRARY_PATH "libs/"
 #define SSBC_DEFAULT_UUID_FILE    "ssbc.uuid"
 
+#define SSBC_RETRY_RESTART_COUNT_MAX 3
+
 #endif /* DEFINES_H_ */

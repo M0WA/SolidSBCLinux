@@ -14,10 +14,9 @@ CSolidSBCTestManager::CSolidSBCTestManager()
 CSolidSBCTestManager::~CSolidSBCTestManager()
 {
 	std::map<std::string,CSolidSBCTestConfig*>::iterator iIter = m_mapTestNamesConfigs.begin();
-	for(;iIter != m_mapTestNamesConfigs.end(); iIter++)	{
+	for(;iIter != m_mapTestNamesConfigs.end(); iIter++)
 		if(iIter->second)
 			delete iIter->second;
-	}
 }
 
 void CSolidSBCTestManager::GetTestNames(std::vector<std::string>& vecTestNames) const
@@ -31,14 +30,10 @@ bool CSolidSBCTestManager::GetTestConfigByName(const std::string& sTestName, std
 {
 	std::map<std::string,CSolidSBCTestConfig*>::const_iterator iNameIter = m_mapTestNamesConfigs.find(sTestName);
 	if(iNameIter == m_mapTestNamesConfigs.end())
-	{
 		return false;
-	}
-	else
-	{
+	else {
 		pairTestNameConfig = *iNameIter;
-		return true;
-	}
+		return true; }
 }
 
 bool CSolidSBCTestManager::GetTestThreadByName(const std::string& sTestName, std::pair<std::string,CSolidSBCThread::ThreadFunction>& pairTestNameThreadFunc) const
