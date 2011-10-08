@@ -16,8 +16,6 @@ class CSolidSBCTestThread : public CSolidSBCThread
 public:
 	CSolidSBCTestThread(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig);
 	virtual ~CSolidSBCTestThread();
-
-protected:
 };
 
 #endif /* CSOLIDSBCTESTTHREAD_H_ */

@@ -71,7 +71,11 @@ bool CSolidSBCClient::StartTests(void)
 	{
 		if (!CSolidSBCTestLibraryManager::GetInstance()->StartTestFromConfig(*iIter))
 		{
-			//TODO:handle this error
+			std::string sTestName = CSolidSBCTestConfig::GetTestNameFromXML(*iIter);
+			if(sTestName != "")
+				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_FIND_TEST + sTestName);
+			else
+				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_PARSE_TESTCONFIG + *iIter);
 		}
 	}
 	return false;

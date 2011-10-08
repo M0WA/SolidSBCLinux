@@ -27,31 +27,57 @@ void CSolidSBCTestManager::GetTestNames(std::vector<std::string>& vecTestNames) 
 			vecTestNames.push_back(iNameIter->first);
 }
 
-bool CSolidSBCTestManager::GetTestByName(const std::string& sTestName, std::pair<std::string,CSolidSBCTestConfig*>& pairTestNameConfig) const
+bool CSolidSBCTestManager::GetTestConfigByName(const std::string& sTestName, std::pair<std::string,CSolidSBCTestConfig*>& pairTestNameConfig) const
 {
-	std::map<std::string,CSolidSBCTestConfig*>::const_iterator iNameIter = m_mapTestNamesConfigs.begin();
-	for(; iNameIter != m_mapTestNamesConfigs.end();iNameIter++)
-		if(!iNameIter->first.compare(sTestName))
-			return true;
-	return false;
+	std::map<std::string,CSolidSBCTestConfig*>::const_iterator iNameIter = m_mapTestNamesConfigs.find(sTestName);
+	if(iNameIter == m_mapTestNamesConfigs.end())
+	{
+		return false;
+	}
+	else
+	{
+		pairTestNameConfig = *iNameIter;
+		return true;
+	}
+}
+
+bool CSolidSBCTestManager::GetTestThreadByName(const std::string& sTestName, std::pair<std::string,CSolidSBCThread::ThreadFunction>& pairTestNameThreadFunc) const
+{
+	std::map<std::string,CSolidSBCThread::ThreadFunction>::const_iterator iNameIter = m_mapTestNamesThreadFunc.find(sTestName);
+	if(iNameIter == m_mapTestNamesThreadFunc.end())
+	{
+		return false;
+	}
+	else
+	{
+		pairTestNameThreadFunc = *iNameIter;
+		return true;
+	}
 }
 
 bool CSolidSBCTestManager::HasTest(const std::string& sTestName) const
 {
 	std::pair<std::string,CSolidSBCTestConfig*> pairTestNameConfig;
-	return GetTestByName(sTestName,pairTestNameConfig);
+	return GetTestConfigByName(sTestName,pairTestNameConfig);
 }
 
 bool CSolidSBCTestManager::StartTestByName(const std::string& sTestName, const std::string& sConfigXml)
 {
 	std::pair<std::string,CSolidSBCTestConfig*> pairTestNameConfig;
-	if(!GetTestByName(sTestName,pairTestNameConfig))
+	if(!GetTestConfigByName(sTestName,pairTestNameConfig))
 		return false;
-
 	pairTestNameConfig.second->SetXml(sConfigXml);
 
-	//TODO: start test thread
-	return false;
+	std::pair<std::string,CSolidSBCThread::ThreadFunction> pairTestNameThreadFunc;
+	if(!GetTestThreadByName(sTestName,pairTestNameThreadFunc))
+		return false;
+
+	CSolidSBCTestThread* pTestThread = new CSolidSBCTestThread(pairTestNameThreadFunc.second, pairTestNameConfig.second);
+	if( !pTestThread->StartThread() )
+		return false;
+
+	m_vecSolidSBCRunningTestThreads.push_back(pTestThread);
+	return true;
 }
 
 void CSolidSBCTestManager::RegisterTest(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig)

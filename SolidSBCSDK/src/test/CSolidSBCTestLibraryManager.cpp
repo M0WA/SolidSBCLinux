@@ -6,6 +6,7 @@
  */
 
 #include "CSolidSBCTestLibraryManager.h"
+#include "../log/CSolidSBCLogging.h"
 
 #include <dirent.h>
 #include <dlfcn.h>
@@ -68,7 +69,7 @@ void CSolidSBCTestLibraryManager::LoadAllLibraries(void)
     }
     else
     {
-        //TODO: cout << "Error opening directory" << endl;
+    	g_cLogging.Log(_SSBC_LOG_ERROR,_SSBC_ERR_INVALID_TESTLIB_DIR);
     }
 }
 
@@ -79,7 +80,9 @@ bool CSolidSBCTestLibraryManager::TryLoadLibrary(const std::string& sLibraryFile
 		return false;
 	}
 
-	CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC GetSolidSBCTestManager = (CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC)dlsym(handle, "GetSolidSBCTestManager");
+	CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC GetSolidSBCTestManager =
+			(CSolidSBCTestManager::PTESTMANAGER_INSTANCEGETTER_FUNC)dlsym(handle, "GetSolidSBCTestManager");
+
 	char *error;
 	if ( !GetSolidSBCTestManager || ((error = dlerror()) != NULL) ) {
 		dlclose(handle);
@@ -104,13 +107,8 @@ bool CSolidSBCTestLibraryManager::StartTestFromConfig(const std::string& sConfig
 
 	std::map<CSolidSBCTestManager*,void*>::iterator iIter = m_mapTestManagerLibHandle.begin();
 	for(; iIter != m_mapTestManagerLibHandle.end(); iIter++)
-	{
 		if(iIter->first->HasTest(sTestName))
-		{
-			iIter->first->StartTestByName(sTestName, sConfigXml);
-			return true;
-		}
-	}
+			return iIter->first->StartTestByName(sTestName, sConfigXml);
 
 	return false;
 }

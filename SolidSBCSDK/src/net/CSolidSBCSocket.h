@@ -123,8 +123,8 @@ private:
 	void RegisterConnectCallback(OnConnectCallback pCallback);
 	void RegisterReadCallback   (OnReadCallback pCallback, int nReadBytes = 0);
 
-	static void* WaitForConnectThread(_PSSBC_THREAD_PARAM param);
-	static void* WaitForReadThread   (_PSSBC_THREAD_PARAM param);
+	static void* WaitForConnectThread(CSolidSBCThread::PSSBC_THREAD_PARAM param);
+	static void* WaitForReadThread   (CSolidSBCThread::PSSBC_THREAD_PARAM param);
 
 	static _SSBC_SOCKET_READ_STATE Read(_PSSBC_READ_SOCKET_PARAM pParam);
 

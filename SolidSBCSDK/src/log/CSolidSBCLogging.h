@@ -19,7 +19,9 @@ typedef enum
 	_SSBC_LOG_ERROR,
 	_SSBC_LOG_WARN,
 	_SSBC_LOG_INFO,
+#ifdef _DEBUG
 	_SSBC_LOG_DEBUG,
+#endif
 } _SSBC_LOG_LEVEL;
 
 class CSolidSBCLogging

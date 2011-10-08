@@ -342,7 +342,7 @@ void CSolidSBCSocket::RegisterReadCallback(OnReadCallback pCallback, int nReadBy
 	RegisterCallback((CSolidSBCThread::ThreadFunction)&WaitForReadThread, pReadParam, true);
 }
 
-void* CSolidSBCSocket::WaitForConnectThread(_PSSBC_THREAD_PARAM param)
+void* CSolidSBCSocket::WaitForConnectThread(CSolidSBCThread::PSSBC_THREAD_PARAM param)
 {
 	_PSSBC_SOCKET_PARAM pConnectParam = (_PSSBC_SOCKET_PARAM)param->pParam;
 
@@ -366,7 +366,7 @@ void* CSolidSBCSocket::WaitForConnectThread(_PSSBC_THREAD_PARAM param)
 	return 0;
 }
 
-void* CSolidSBCSocket::WaitForReadThread(_PSSBC_THREAD_PARAM param)
+void* CSolidSBCSocket::WaitForReadThread(CSolidSBCThread::PSSBC_THREAD_PARAM param)
 {
 	_PSSBC_READ_SOCKET_PARAM pReadParam = reinterpret_cast<_PSSBC_READ_SOCKET_PARAM>(param->pParam);
 	_SSBC_SOCKET_READ_STATE nState = Read(pReadParam);

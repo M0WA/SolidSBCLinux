@@ -10,14 +10,15 @@
 
 #include <pthread.h>
 
-typedef struct {
-	bool* pbShallEnd;
-	void* pParam;
-} _SSBC_THREAD_PARAM, *_PSSBC_THREAD_PARAM;
-
 class CSolidSBCThread
 {
 public:
+	typedef struct {
+		bool* pbShallEnd;
+		void* pParam;
+		CSolidSBCThread* pInstance;
+	} SSBC_THREAD_PARAM, *PSSBC_THREAD_PARAM;
+
 	typedef void* (*ThreadFunction)(void*);
 
 	CSolidSBCThread(ThreadFunction pFunction, void* param, bool bAutoDelete = true);

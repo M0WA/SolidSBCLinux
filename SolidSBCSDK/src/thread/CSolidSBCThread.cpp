@@ -27,9 +27,10 @@ bool CSolidSBCThread::StartThread(void)
 
 	m_bShallEnd = false;
 
-	_PSSBC_THREAD_PARAM pThreadParam = new _SSBC_THREAD_PARAM;
+	PSSBC_THREAD_PARAM pThreadParam = new SSBC_THREAD_PARAM;
 	pThreadParam->pbShallEnd = &m_bShallEnd;
 	pThreadParam->pParam     = m_pParam;
+	pThreadParam->pInstance  = this;
 
 	pthread_attr_init(&m_tThreadAttr);
 	pthread_attr_setdetachstate(&m_tThreadAttr, PTHREAD_CREATE_JOINABLE);

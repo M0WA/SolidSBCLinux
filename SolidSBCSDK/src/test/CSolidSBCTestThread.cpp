@@ -8,7 +8,7 @@
 #include "CSolidSBCTestThread.h"
 
 CSolidSBCTestThread::CSolidSBCTestThread(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig)
-: CSolidSBCThread(pThreadFunc,pTestConfig,false)
+: CSolidSBCThread(pThreadFunc, pTestConfig, false)
 {
 }
 

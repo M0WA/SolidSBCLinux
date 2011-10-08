@@ -83,10 +83,6 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 
 #ifdef _DEBUG
 				std::string sTestName  = CSolidSBCTestConfig::GetTestNameFromXML(sConfigXml);
-				if (sTestName == ""){
-					pConfigSocket->m_nErrorCount++;
-					break;}
-
 				g_cLogging.Log(_SSBC_LOG_DEBUG,"dumping config for \"" + sTestName +"\" reply:\n" + sConfigXml);
 #endif
 			}
