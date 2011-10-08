@@ -27,6 +27,8 @@ public:
 	bool StartThread(void);
 	bool StopThread(bool bOnlyStop = true);
 
+	bool ShallEnd(void);
+
 private:
 	ThreadFunction  m_pFunction;
 	void*           m_pParam;

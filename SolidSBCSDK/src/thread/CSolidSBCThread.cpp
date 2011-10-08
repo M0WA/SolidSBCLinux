@@ -67,3 +67,8 @@ bool CSolidSBCThread::StopThread(bool bOnlyStop)
 	m_tThread = 0;
 	return false;
 }
+
+bool CSolidSBCThread::ShallEnd(void)
+{
+	return m_bShallEnd;
+}
