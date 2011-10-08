@@ -68,35 +68,32 @@ void SigHandler(int nSignal)
 
 int main(int argc, char** argv)
 {
-	if(!argc)
-		CSolidSBCCommandlineParser::PrintUsage();
-	else
-	{
-		struct sigaction action;
-		action.sa_handler = SigHandler;
-		sigemptyset (&action.sa_mask);
-		action.sa_flags = 0;
-		sigaction(SIGTERM,  NULL, &action);
-		sigaction(SIGSEGV,  NULL, &action);
-		sigaction(SIGILL,   NULL, &action);
+	if(!argc) {
+		CSolidSBCCommandlineParser::PrintUsage(); }
 
-		std::stringstream ssStream;
-		ssStream << _SSBC_INFO_STARTING << " (version " << MAJOR_VERSION << "." << MINOR_VERSION << ")";
-		g_cLogging.Log(_SSBC_LOG_INFO, ssStream.str());
+	struct sigaction action;
+	action.sa_handler = SigHandler;
+	sigemptyset (&action.sa_mask);
+	action.sa_flags = 0;
+	sigaction(SIGTERM,  NULL, &action);
+	sigaction(SIGSEGV,  NULL, &action);
+	sigaction(SIGILL,   NULL, &action);
 
-		CSolidSBCClient client(argc,(const char**)argv);
-		bool bError = false;
-		int  nTry   = 0;
-		while ( (bError = !client.Start()) && client.GetAutoReconnect() && nTry < SSBC_RETRY_RESTART_COUNT_MAX ) {
-			g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_RETRYING_TO_START);
-			nTry++; }
+	std::stringstream ssStream;
+	ssStream << _SSBC_INFO_STARTING << " (version " << MAJOR_VERSION << "." << MINOR_VERSION << ")";
+	g_cLogging.Log(_SSBC_LOG_INFO, ssStream.str());
 
-		if(bError) {
-			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT); }
+	CSolidSBCClient client(argc,(const char**)argv);
+	bool bError = false;
+	int  nTry   = 0;
+	while ( (bError = !client.Start()) && client.GetAutoReconnect() && nTry < SSBC_RETRY_RESTART_COUNT_MAX ) {
+		g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_RETRYING_TO_START);
+		nTry++; }
 
-		while(!g_bEnd)
-			sleep(3);
-	}
+	if(bError) {
+		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT); }
 
+	while(!g_bEnd)
+		sleep(3);
 	return 0;
 }
