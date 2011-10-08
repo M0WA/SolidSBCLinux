@@ -7,12 +7,14 @@
 #include "CSolidSBCTestManagerImpl.h"
 
 #include "../tests/testnames.h"
+
 #include "../tests/CSolidSBCTestConfigMemory.h"
+#include "../tests/CSolidSBCTestThreadMemory.h"
 
 CSolidSBCTestManagerImpl::CSolidSBCTestManagerImpl()
 : CSolidSBCTestManager()
 {
-	RegisterTest(0,new CSolidSBCTestConfigMemory(""));
+	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc,new CSolidSBCTestConfigMemory(""));
 }
 
 CSolidSBCTestManagerImpl::~CSolidSBCTestManagerImpl()

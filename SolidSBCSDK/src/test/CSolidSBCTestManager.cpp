@@ -45,14 +45,10 @@ bool CSolidSBCTestManager::GetTestThreadByName(const std::string& sTestName, std
 {
 	std::map<std::string,CSolidSBCThread::ThreadFunction>::const_iterator iNameIter = m_mapTestNamesThreadFunc.find(sTestName);
 	if(iNameIter == m_mapTestNamesThreadFunc.end())
-	{
 		return false;
-	}
-	else
-	{
+	else {
 		pairTestNameThreadFunc = *iNameIter;
-		return true;
-	}
+		return true; }
 }
 
 bool CSolidSBCTestManager::HasTest(const std::string& sTestName) const
