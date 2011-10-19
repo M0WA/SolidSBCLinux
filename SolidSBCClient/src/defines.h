@@ -16,7 +16,11 @@
 #define SSBC_DEFAULT_CONFIG_PORT 52410
 #define SSBC_DEFAULT_RESULT_PORT 52411
 
-#define SSBC_DEFAULT_LIBRARY_PATH "libs/"
+#ifdef _DEBUG
+	#define SSBC_DEFAULT_LIBRARY_PATH "/home/momo/SolidSBCLinux/SolidSBCTestLib/Debug/"
+#else
+	#define SSBC_DEFAULT_LIBRARY_PATH "libs/"
+#endif
 #define SSBC_DEFAULT_UUID_FILE    "ssbc.uuid"
 
 #define SSBC_RETRY_RESTART_COUNT_MAX 3

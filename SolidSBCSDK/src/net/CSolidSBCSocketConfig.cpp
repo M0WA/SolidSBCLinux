@@ -25,10 +25,6 @@ CSolidSBCSocketConfig::~CSolidSBCSocketConfig()
 
 void CSolidSBCSocketConfig::GetConfigsFromServer(void)
 {
-	//check if we are already fetching configs
-	if(!IsFinished())
-		return;
-
 	m_vecTestConfigs.clear();
 	m_nErrorCount = 0;
 
@@ -39,7 +35,6 @@ void CSolidSBCSocketConfig::GetConfigsFromServer(void)
 	CSolidSBCSocket::Read((CSolidSBCSocket::OnReadCallback)&CSolidSBCSocketConfig::ReadHeaderCallback, sizeof(CSolidSBCPacket::SSBC_PACKET_HEADER));
 
 	//wait for all config responses
-	m_bFinished = false;
 	while(!m_bFinished)
 		sleep(1);
 }
@@ -60,8 +55,6 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 {
 	CSolidSBCSocketConfig* pConfigSocket         = reinterpret_cast<CSolidSBCSocketConfig*>(pReadParams->pcSocket);
 	CSolidSBCPacket::PSSBC_PACKET_HEADER pHeader = (CSolidSBCPacket::PSSBC_PACKET_HEADER)(pReadParams->pBuffer);
-
-	pConfigSocket->m_bFinished = true;
 
 	//TODO: pass error messages to OnConfigError()
 	switch(nState)
@@ -95,6 +88,8 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 		pConfigSocket->m_nErrorCount++;
 		break;
 	}
+
+	pConfigSocket->m_bFinished = true;
 }
 
 void CSolidSBCSocketConfig::Close(void)
@@ -105,6 +100,11 @@ void CSolidSBCSocketConfig::Close(void)
 
 CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE CSolidSBCSocketConfig::Connect(const std::string& sHost, const short nPort, const std::string& sClientName, const std::string& sUuid, OnConnectCallback pCallback)
 {
+	//check if we are already fetching configs
+	if(!IsFinished())
+		return CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_FAILED;
+
+	m_bFinished   = false;
 	m_sClientName = sClientName;
 	m_sUuid       = sUuid;
 	return CSolidSBCSocket::Connect(sHost, nPort, pCallback);

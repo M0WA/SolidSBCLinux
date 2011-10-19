@@ -6,8 +6,9 @@
  */
 
 #include "interface.h"
+#include "CSolidSBCTestManagerImpl.h"
 
 CSolidSBCTestManager* GetSolidSBCTestManager(void)
 {
-	return 0;
+	return CSolidSBCTestManagerImpl::GetInstance();
 }

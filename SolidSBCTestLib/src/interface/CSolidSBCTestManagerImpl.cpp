@@ -11,12 +11,19 @@
 #include "../tests/CSolidSBCTestConfigMemory.h"
 #include "../tests/CSolidSBCTestThreadMemory.h"
 
+CSolidSBCTestManagerImpl g_cTestManagerImpl;
+
 CSolidSBCTestManagerImpl::CSolidSBCTestManagerImpl()
 : CSolidSBCTestManager()
 {
-	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc,new CSolidSBCTestConfigMemory(""));
+	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc, new CSolidSBCTestConfigMemory(""));
 }
 
 CSolidSBCTestManagerImpl::~CSolidSBCTestManagerImpl()
 {
+}
+
+CSolidSBCTestManagerImpl* CSolidSBCTestManagerImpl::GetInstance()
+{
+	return &g_cTestManagerImpl;
 }

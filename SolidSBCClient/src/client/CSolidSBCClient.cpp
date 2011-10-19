@@ -19,6 +19,7 @@ CSolidSBCClient::CSolidSBCClient(int argc, const char** argv)
 	g_pSolidSBCClientInstance = this;
 
 	ParseCommandline(argc, argv);
+
 	m_pUuidManager        = new CSolidSBCUuidManager(GetUuidFile());
 	m_pTestLibraryManager = new CSolidSBCTestLibraryManager(GetTestLibraryPath());
 }
@@ -72,13 +73,15 @@ bool CSolidSBCClient::StartTests(void)
 		if (!CSolidSBCTestLibraryManager::GetInstance()->StartTestFromConfig(*iIter))
 		{
 			std::string sTestName = CSolidSBCTestConfig::GetTestNameFromXML(*iIter);
-			if(sTestName != "")
-				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_FIND_TEST + sTestName);
-			else
-				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_PARSE_TESTCONFIG + *iIter);
+			if(sTestName != "") {
+				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_FIND_TEST + sTestName); }
+			else {
+				g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_COULD_NOT_PARSE_TESTCONFIG + *iIter); }
+
+			return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool CSolidSBCClient::InitTestConfigs(void)

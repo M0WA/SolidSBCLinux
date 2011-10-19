@@ -1,5 +1,5 @@
 //============================================================================
-// Name        : SolidSBCCLient.cpp
+// Name        : SolidSBCClient.cpp
 // Author      : Moritz Wagner
 // Version     :
 // Copyright   : Copyright Moritz Wagner
@@ -11,6 +11,7 @@
 #include "defines.h"
 #include "client/CSolidSBCClient.h"
 #include "../../SolidSBCSDK/src/log/CSolidSBCLogging.h"
+
 #ifdef _DEBUG
 	#include "../../SolidSBCSDK/src/debug/CSolidSBCDebugging.h"
 #endif
@@ -61,8 +62,14 @@ void SigHandler(int nSignal)
 
 	g_bEnd = true;
 
-	//re-raise signal to trigger
-	//default signal handler
+	//install default signal handler
+	struct sigaction action;
+	action.sa_handler = SIG_DFL;
+	action.sa_flags   = 0;
+	sigemptyset (&action.sa_mask);
+
+	//re-raise signal
+	sigaction(nSignal,  NULL, &action);
 	raise(nSignal);
 }
 
@@ -75,9 +82,12 @@ int main(int argc, char** argv)
 	action.sa_handler = SigHandler;
 	sigemptyset (&action.sa_mask);
 	action.sa_flags = 0;
+
 	sigaction(SIGTERM,  NULL, &action);
 	sigaction(SIGSEGV,  NULL, &action);
-	sigaction(SIGILL,   NULL, &action);
+	sigaction(SIGILL ,  NULL, &action);
+	sigaction(SIGABRT,  NULL, &action);
+	sigaction(SIGKILL,  NULL, &action);
 
 	std::stringstream ssStream;
 	ssStream << _SSBC_INFO_STARTING << " (version " << MAJOR_VERSION << "." << MINOR_VERSION << ")";
@@ -92,8 +102,9 @@ int main(int argc, char** argv)
 
 	if(bError) {
 		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT); }
-
-	while(!g_bEnd)
-		sleep(3);
+	else {
+		while(!g_bEnd)
+			sleep(3);
+	}
 	return 0;
 }

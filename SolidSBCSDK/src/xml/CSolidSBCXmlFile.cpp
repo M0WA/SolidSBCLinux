@@ -6,31 +6,57 @@
  */
 
 #include "CSolidSBCXmlFile.h"
+#include "../thread/CSolidSBCAutoMutex.h"
 
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 
+CSolidSBCMutex g_cXmlMutex;
+
 
 CSolidSBCXmlFile::CSolidSBCXmlFile(const std::string& sXmlString)
 : m_sXmlString(sXmlString)
+, m_pXml(0)
 {
 	xmlInitParser();
-
-	m_pXml = xmlParseMemory(sXmlString.c_str(), sXmlString.size());
+	Init();
 }
 
 CSolidSBCXmlFile::~CSolidSBCXmlFile()
 {
-	if (m_pXml)
-		xmlFreeDoc(m_pXml);
-	m_pXml = 0;
-
+	Cleanup();
 	xmlCleanupParser();
 }
 
-bool CSolidSBCXmlFile::GetNodeString(const std::string& sXPath, std::string& value) const
+void CSolidSBCXmlFile::Init()
 {
+	Cleanup();
+
+	CSolidSBCAutoMutex autoMutex(g_cXmlMutex);
+	m_pXml = xmlParseMemory(m_sXmlString.c_str(), m_sXmlString.size());
+}
+
+void CSolidSBCXmlFile::Cleanup()
+{
+	CSolidSBCAutoMutex autoMutex(g_cXmlMutex);
+	if (m_pXml)
+	{
+		xmlFreeDoc(m_pXml);
+		m_pXml = 0;
+	}
+}
+
+void CSolidSBCXmlFile::SetXmlString(const std::string& sXml)
+{
+	m_sXmlString = sXml;
+	Init();
+}
+
+bool CSolidSBCXmlFile::GetNodeString(const std::string& sXPath, std::string& value)
+{
+	CSolidSBCAutoMutex autoMutex(g_cXmlMutex);
+
     xmlXPathContextPtr xpathCtx;
     xmlXPathObjectPtr xpathObj;
 

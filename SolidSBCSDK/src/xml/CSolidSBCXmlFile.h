@@ -11,6 +11,8 @@
 #include <string>
 #include <sstream>
 
+#include "../thread/CSolidSBCMutex.h"
+
 #include <libxml/tree.h>
 
 using namespace std;
@@ -21,7 +23,7 @@ public:
 	CSolidSBCXmlFile(const std::string& sXmlString);
 	~CSolidSBCXmlFile();
 
-	template<class Tvalue> bool GetNodeValue(const std::string& sXPath, Tvalue& value) const
+	template<class Tvalue> bool GetNodeValue(const std::string& sXPath, Tvalue& value)
 	{
 		std::string sValue;
 		bool bSuccess = !GetNodeString(sXPath, sValue);
@@ -37,16 +39,21 @@ public:
 		return bSuccess;
 	}
 
-	template<class string> bool GetNodeValue(const std::string& sXPath, std::string& value) const
+	template<class string> bool GetNodeValue(const std::string& sXPath, std::string& value)
 	{
 		return !GetNodeString(sXPath, value);
 	}
 
+	void SetXmlString(const std::string& sXml);
+
 private:
-	bool GetNodeString(const std::string& sXPath, std::string& value) const;
+	void Init();
+	void Cleanup();
+	bool GetNodeString(const std::string& sXPath, std::string& value);
 
 	std::string  m_sXmlString;
-	xmlDocPtr    m_pXml;
+
+	xmlDocPtr      m_pXml;
 };
 
 #endif /* CSOLIDSBCXMLFILE_H_ */

@@ -15,6 +15,8 @@ class CSolidSBCTestManagerImpl : public CSolidSBCTestManager
 public:
 	CSolidSBCTestManagerImpl();
 	virtual ~CSolidSBCTestManagerImpl();
+
+	static CSolidSBCTestManagerImpl* GetInstance();
 };
 
 #endif /* CSOLIDSBCTESTMANAGERIMPL_H_ */

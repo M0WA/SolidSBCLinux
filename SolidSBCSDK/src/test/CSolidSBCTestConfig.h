@@ -32,7 +32,7 @@ public:
 		return false;
 	}
 
-	void SetXml(const std::string& sXml) {m_sXmlString = sXml;}
+	void SetXml(const std::string& sXml);
 	std::string GetTestName(void) const { return m_sTestname; };
 	std::string GenerateXML(void);
 

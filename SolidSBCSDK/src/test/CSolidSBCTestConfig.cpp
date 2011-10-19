@@ -52,13 +52,19 @@ void CSolidSBCTestConfig::RegisterAttribute(const std::string& sAttributeName, c
 
 void CSolidSBCTestConfig::RegisterXPathByAttributeName(const std::string& sAttributeName)
 {
-	std::string sXPath = "Test/" + sAttributeName +"[1]";
+	std::string sXPath = "/Test/" + sAttributeName +"[1]";
 	m_mapAttributeXPaths[sAttributeName] = sXPath;
 }
 
 void CSolidSBCTestConfig::RegisterDefaultValueByAttributeName(const std::string& sAttributeName, const std::string& sAttributeDefault)
 {
 	m_mapAttributeDefaults[sAttributeName] = sAttributeDefault;
+}
+
+void CSolidSBCTestConfig::SetXml(const std::string& sXml)
+{
+	m_sXmlString = sXml;
+	m_pXmlFile->SetXmlString(sXml);
 }
 
 std::string CSolidSBCTestConfig::GenerateXML(void)

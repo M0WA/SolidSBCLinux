@@ -45,6 +45,9 @@ void CSolidSBCTestLibraryManager::LoadAllLibraries(void)
 
 	int nLoadedLibraries = 0;
 
+	char pszPath[255];
+	getcwd(pszPath,255);
+
     DIR *dir = opendir(m_sLibraryPath.c_str());
     if(dir)
     {
@@ -55,7 +58,8 @@ void CSolidSBCTestLibraryManager::LoadAllLibraries(void)
         	{
         	case DT_REG: //is a file
 				{
-					if( !TryLoadLibrary(ent->d_name) ) {
+					std::string sLibraryFileNamePath = m_sLibraryPath + ent->d_name;
+					if( TryLoadLibrary(sLibraryFileNamePath) ) {
 						nLoadedLibraries++;}
 				}
         		break;

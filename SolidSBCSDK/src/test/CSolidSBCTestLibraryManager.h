@@ -22,16 +22,15 @@ public:
 	CSolidSBCTestLibraryManager(const std::string& sLibraryPath);
 	virtual ~CSolidSBCTestLibraryManager();
 
-	void UnloadAllLibraries(void);
-
-	void LoadAllLibraries(void);
-	bool TryLoadLibrary(const std::string& sLibraryFileName);
-
+	void UnloadAllLibraries (void);
+	void LoadAllLibraries   (void);
 	bool StartTestFromConfig(const std::string& sConfigXml);
 
 	static CSolidSBCTestLibraryManager* GetInstance(void);
 
 private:
+	bool TryLoadLibrary(const std::string& sLibraryFileName);
+
 	std::map<CSolidSBCTestManager*,void*> m_mapTestManagerLibHandle;
 	std::string                           m_sLibraryPath;
 };
