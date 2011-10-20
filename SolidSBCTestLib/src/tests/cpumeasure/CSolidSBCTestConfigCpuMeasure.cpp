@@ -5,21 +5,21 @@
  *      Author: Moritz Wagner
  */
 
-#include "CSolidSBCTestCpuMeasureConfig.h"
+#include "CSolidSBCTestConfigCpuMeasure.h"
 #include "testnames.h"
 
-CSolidSBCTestCpuMeasureConfig::CSolidSBCTestCpuMeasureConfig(const std::string& sXmlString)
+CSolidSBCTestConfigCpuMeasure::CSolidSBCTestConfigCpuMeasure(const std::string& sXmlString)
 : CSolidSBCTestConfig(SSBC_CPUMEASURE_TEST_NAME,sXmlString)
 {
 	RegisterAttributes();
 	Init();
 }
 
-CSolidSBCTestCpuMeasureConfig::~CSolidSBCTestCpuMeasureConfig()
+CSolidSBCTestConfigCpuMeasure::~CSolidSBCTestConfigCpuMeasure()
 {
 }
 
-void CSolidSBCTestCpuMeasureConfig::RegisterAttributes(void)
+void CSolidSBCTestConfigCpuMeasure::RegisterAttributes(void)
 {
 	RegisterAttribute( "DivisionCnt"          , "1000");
 	RegisterAttribute( "AdditionCnt"          , "1000");
@@ -28,35 +28,35 @@ void CSolidSBCTestCpuMeasureConfig::RegisterAttributes(void)
 	RegisterAttribute( "TransmitData"         , "1"   );
 }
 
-unsigned int CSolidSBCTestCpuMeasureConfig::GetDivisionCnt(void)
+unsigned int CSolidSBCTestConfigCpuMeasure::GetDivisionCnt(void)
 {
 	unsigned int nDivisionCnt = 0;
 	GetAttributeByName<unsigned int>("DivisionCnt", nDivisionCnt);
 	return nDivisionCnt;
 }
 
-unsigned int CSolidSBCTestCpuMeasureConfig::GetAdditionCnt(void)
+unsigned int CSolidSBCTestConfigCpuMeasure::GetAdditionCnt(void)
 {
 	unsigned int nAdditionCnt = 0;
 	GetAttributeByName<unsigned int>("AdditionCnt", nAdditionCnt);
 	return nAdditionCnt;
 }
 
-bool CSolidSBCTestCpuMeasureConfig::GetTransmitData(void)
+bool CSolidSBCTestConfigCpuMeasure::GetTransmitData(void)
 {
 	bool bTransmitData = false;
 	GetAttributeByName<bool>("TransmitData", bTransmitData);
 	return bTransmitData;
 }
 
-unsigned int CSolidSBCTestCpuMeasureConfig::GetAutoFixMultiplier(void)
+unsigned int CSolidSBCTestConfigCpuMeasure::GetAutoFixMultiplier(void)
 {
 	unsigned int nAutoFixMultiplier = 0;
 	GetAttributeByName<unsigned int>("AutoFixMultiplier", nAutoFixMultiplier);
 	return nAutoFixMultiplier;
 }
 
-double CSolidSBCTestCpuMeasureConfig::GetFixMultiplierTreshold(void)
+double CSolidSBCTestConfigCpuMeasure::GetFixMultiplierTreshold(void)
 {
 	double dFixMultiplierTreshold = 0.0;
 	GetAttributeByName<double>("FixMultiplierTreshold", dFixMultiplierTreshold);

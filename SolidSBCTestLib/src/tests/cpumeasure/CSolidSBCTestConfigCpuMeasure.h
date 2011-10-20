@@ -5,16 +5,16 @@
  *      Author: Moritz Wagner
  */
 
-#ifndef CSOLIDSBCTESTCPUMEASURECONFIG_H_
-#define CSOLIDSBCTESTCPUMEASURECONFIG_H_
+#ifndef CSOLIDSBCTESTCONFIGCPUMEASURE_H_
+#define CSOLIDSBCTESTCONFIGCPUMEASURE_H_
 
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
-class CSolidSBCTestCpuMeasureConfig : CSolidSBCTestConfig
+class CSolidSBCTestConfigCpuMeasure : CSolidSBCTestConfig
 {
 public:
-	CSolidSBCTestCpuMeasureConfig(const std::string& sXmlString = "");
-	virtual ~CSolidSBCTestCpuMeasureConfig();
+	CSolidSBCTestConfigCpuMeasure(const std::string& sXmlString = "");
+	virtual ~CSolidSBCTestConfigCpuMeasure();
 
 	unsigned int GetDivisionCnt(void);
 	unsigned int GetAdditionCnt(void);
@@ -26,4 +26,4 @@ protected:
 	void RegisterAttributes(void);
 };
 
-#endif /* CSOLIDSBCTESTCPUMEASURECONFIG_H_ */
+#endif /* CSOLIDSBCTESTCONFIGCPUMEASURE_H_ */

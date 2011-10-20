@@ -1,20 +1,20 @@
 /*
- * CSolidSBCTestCpuConfig.h
+ * CSolidSBCTestConfigCpu.h
  *
  *  Created on: 09.10.2011
  *      Author: Moritz Wagner
  */
 
-#ifndef CSOLIDSBCTESTCPUCONFIG_H_
-#define CSOLIDSBCTESTCPUCONFIG_H_
+#ifndef CSOLIDSBCTESTCONFIGCPU_H_
+#define CSOLIDSBCTESTCONFIGCPU_H_
 
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
-class CSolidSBCTestCpuConfig : CSolidSBCTestConfig
+class CSolidSBCTestConfigCpu : CSolidSBCTestConfig
 {
 public:
-	CSolidSBCTestCpuConfig(const std::string& sXmlConfig = "");
-	virtual ~CSolidSBCTestCpuConfig();
+	CSolidSBCTestConfigCpu(const std::string& sXmlConfig = "");
+	virtual ~CSolidSBCTestConfigCpu();
 
 	bool         GetRandomize(void);
 	unsigned int GetMaxRand(void);
@@ -25,4 +25,4 @@ protected:
 	void RegisterAttributes(void);
 };
 
-#endif /* CSOLIDSBCTESTCPUCONFIG_H_ */
+#endif /* CSOLIDSBCTESTCONFIGCPU_H_ */
