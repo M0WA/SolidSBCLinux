@@ -11,6 +11,9 @@
 #include "../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 #include "../../../SolidSBCSDK/src/debug/CSolidSBCPerformanceCounter.h"
 
+#include "../interface/CSolidSBCTestManagerImpl.h"
+#include "CSolidSBCTestResultMemory.h"
+
 #include "string.h"
 
 //TODO: disabling optimizing
@@ -53,15 +56,10 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 			//TODO: !!!!!!!!!!!!!!! limit msg/seconds !!!!!!!!!!!!!!!!
 			if ( pTestConfig->GetTransmitData() )
 			{
-				//TODO: implement sending result
-				/*
-				VMPERF_MEMORY_TESTRESULT_PACKET packet;
-				memset(&packet,0x00,sizeof(VMPERF_MEMORY_TESTRESULT_PACKET));
-				packet.dMallocZeroDuration = dMallocZeroDuration;
-				packet.ulBytes			   = ulMallocZeroBytes;
-
-				pThreadParam->pcResultStack->AddTestResult( (void*)&packet,VMPERF_MEMORY_TESTRESULT_PACKET_TYPE);
-				*/
+				CSolidSBCTestResultMemory* pMemResult = new CSolidSBCTestResultMemory();
+				pMemResult->SetByteCount(ulMallocZeroBytes);
+				pMemResult->SetMallocZeroDuration(dMallocZeroDuration);
+				(CSolidSBCTestManagerImpl::GetInstance())->AddResult(pMemResult);
 			}
 
 			rand_r( &number );

@@ -44,7 +44,10 @@ bool CSolidSBCClient::Start(void)
 {
 	Stop();
 
-	if(!InitTestConfigs())
+	if(!StartConfigConnection())
+		return false;
+
+	if(!StartResultConnection())
 		return false;
 
 	if(!StartTests())
@@ -84,7 +87,7 @@ bool CSolidSBCClient::StartTests(void)
 	return true;
 }
 
-bool CSolidSBCClient::InitTestConfigs(void)
+bool CSolidSBCClient::StartConfigConnection(void)
 {
 	CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE nState =
 		CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_FAILED;
@@ -102,11 +105,11 @@ bool CSolidSBCClient::InitTestConfigs(void)
 	   )
 	{
 		int nTimeout = 30; //wait 30 sec max to receive configs
-		while (!m_configSocket.IsFinished() && nTimeout) {
+		while (!m_configSocket.IsInitialized() && nTimeout) {
 			sleep(1);
 			nTimeout--;}
 
-		if(!m_configSocket.IsFinished())
+		if(!m_configSocket.IsInitialized())
 			m_configSocket.Close();
 
 		std::vector<std::string> vecTestConfigStrings =  m_configSocket.GetTestConfigStrings();
@@ -119,4 +122,36 @@ bool CSolidSBCClient::InitTestConfigs(void)
 	else {
 		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
 		return false;}
+}
+
+bool CSolidSBCClient::StartResultConnection(void)
+{
+	CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE nState =
+		CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_FAILED;
+
+	nState = m_resultSocket.Connect(
+			GetResultServerHost(),
+			GetResultServerPort(),
+			GetClientName(),
+			GetUuid(),
+			(CSolidSBCSocket::OnConnectCallback) &CSolidSBCSocketResult::OnConnect);
+
+	if (
+			(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_SUCCESS) ||
+			(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_WAIT)
+		   )
+		{
+			int nTimeout = 30; //wait 30 sec max to receive configs
+			while (!m_resultSocket.IsInitialized() && nTimeout) {
+				sleep(1);
+				nTimeout--;}
+
+			if(!m_resultSocket.IsInitialized())
+				m_resultSocket.Close();
+
+			return true;
+		}
+		else {
+			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
+			return false;}
 }

@@ -15,7 +15,7 @@
 CSolidSBCSocketConfig::CSolidSBCSocketConfig()
 : CSolidSBCSocket()
 , m_nErrorCount(0)
-, m_bFinished(true)
+, m_bInitialized(true)
 {
 }
 
@@ -35,7 +35,7 @@ void CSolidSBCSocketConfig::GetConfigsFromServer(void)
 	CSolidSBCSocket::Read((CSolidSBCSocket::OnReadCallback)&CSolidSBCSocketConfig::ReadHeaderCallback, sizeof(CSolidSBCPacket::SSBC_PACKET_HEADER));
 
 	//wait for all config responses
-	while(!m_bFinished)
+	while(!m_bInitialized)
 		sleep(1);
 }
 
@@ -89,22 +89,22 @@ void CSolidSBCSocketConfig::ReadHeaderCallback(const _SSBC_SOCKET_READ_STATE nSt
 		break;
 	}
 
-	pConfigSocket->m_bFinished = true;
+	pConfigSocket->m_bInitialized = true;
 }
 
 void CSolidSBCSocketConfig::Close(void)
 {
-	m_bFinished = true;
+	m_bInitialized = true;
 	CSolidSBCSocket::Close();
 }
 
 CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE CSolidSBCSocketConfig::Connect(const std::string& sHost, const short nPort, const std::string& sClientName, const std::string& sUuid, OnConnectCallback pCallback)
 {
 	//check if we are already fetching configs
-	if(!IsFinished())
+	if(!IsInitialized())
 		return CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_FAILED;
 
-	m_bFinished   = false;
+	m_bInitialized = false;
 	m_sClientName = sClientName;
 	m_sUuid       = sUuid;
 	return CSolidSBCSocket::Connect(sHost, nPort, pCallback);

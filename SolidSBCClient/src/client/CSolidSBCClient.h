@@ -37,7 +37,8 @@ public:
 	static CSolidSBCClient* GetInstance(void);
 
 private:
-	bool InitTestConfigs(void);
+	bool StartConfigConnection(void);
+	bool StartResultConnection(void);
 	bool StartTests(void);
 
 	CSolidSBCSocketConfig m_configSocket;

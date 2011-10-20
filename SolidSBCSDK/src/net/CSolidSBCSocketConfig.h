@@ -26,7 +26,7 @@ public:
 	std::vector<std::string> GetTestConfigStrings(void) const { return m_vecTestConfigs; }
 	unsigned int             GetTestConfigErrors (void) const { return m_nErrorCount;    }
 
-	bool IsFinished(void) const { return m_bFinished; }
+	bool IsInitialized(void) const { return m_bInitialized; }
 
 	static void* OnConnect(const CSolidSBCSocket::_SSBC_SOCKET_CONNECT_STATE nState, CSolidSBCSocket::_PSSBC_SOCKET_PARAM pConnectParams);
 
@@ -41,7 +41,7 @@ private:
 	std::vector<std::string> m_vecTestConfigs;
 	unsigned int  m_nErrorCount;
 
-	volatile bool m_bFinished;
+	volatile bool m_bInitialized;
 };
 
 #endif /* CSOLIDSBCSOCKETCONFIG_H_ */
