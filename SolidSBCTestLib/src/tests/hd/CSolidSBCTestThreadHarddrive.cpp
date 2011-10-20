@@ -96,7 +96,10 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ] = {0};
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ);
 
-	//TODO: cache config parameters here
+	bool bTransmitData           = pTestConfig->GetTransmitData();
+	unsigned int nReadWriteDelay = pTestConfig->GetReadWriteDelay();
+	unsigned long lReadMax       = pTestConfig->GetReadMax();
+	bool bRandomRead             = pTestConfig->GetRandomRead();
 
 	double dSeconds = 0.0f;
 	CSolidSBCPerformanceCounter cntTime;
@@ -124,12 +127,12 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 	dSeconds = cntTime.Stop();
 
 	//send result
-	if ( pTestConfig->GetTransmitData() )
+	if ( bTransmitData )
 	{
 		CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
 		pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_READ_INIT);
 		pResult->SetByteCount(ulReadBytes);
-		pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+		pResult->SetWaitCount(nReadWriteDelay);
 		pResult->SetDuration(dSeconds);
 		CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 	}
@@ -139,9 +142,9 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 		double dSeconds = 0;
 		CSolidSBCPerformanceCounter cntTime;
 
-		if ( pTestConfig->GetRandomRead() ) {
+		if ( bRandomRead ) {
 			rand_r( &number );
-			ulReadBytes = number % (pTestConfig->GetReadMax()+1);}
+			ulReadBytes = number % (lReadMax+1);}
 
 		//start measuring
 		cntTime.Start();
@@ -159,12 +162,12 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 		dSeconds = cntTime.Stop();
 
 		//send result
-		if ( pTestConfig->GetTransmitData() )
+		if ( bTransmitData )
 		{
 			CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
 			pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_READ);
 			pResult->SetByteCount(ulReadBytes);
-			pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+			pResult->SetWaitCount(nReadWriteDelay);
 			pResult->SetDuration(dSeconds);
 			CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 		}
@@ -174,7 +177,7 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 			break;
 
 		//sleep for given interval and check every second if we should end...
-		for (unsigned long i = 0; i < pTestConfig->GetReadWriteDelay(); i++){
+		for (unsigned long i = 0; i < nReadWriteDelay; i++){
 			usleep(950 * 1000);
 			i++;
 			if ( pThread->ShallEnd() )
@@ -202,13 +205,16 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE];
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE);
 
-	//TODO: cache config parameters here
+	bool bTransmitData           = pTestConfig->GetTransmitData();
+	unsigned int nReadWriteDelay = pTestConfig->GetReadWriteDelay();
+	bool bRandomWrite            = pTestConfig->GetRandomWrite();
+	unsigned long lWriteMax      = pTestConfig->GetWriteMax();
 
 	while ( !pThread->ShallEnd() )
 	{
-		if ( pTestConfig->GetRandomWrite() ) {
+		if ( bRandomWrite ) {
 			rand_r( &number );
-			ulWriteBytes = number % (pTestConfig->GetWriteMax()+1);}
+			ulWriteBytes = number % (lWriteMax+1);}
 
 		CSolidSBCPerformanceCounter cntTime;
 		unsigned long ulBytesWritten = 0, ulWriteBytesStep = SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE;
@@ -237,12 +243,12 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 		dSeconds = cntTime.Stop();
 
 		//send result
-		if ( pTestConfig->GetTransmitData() )
+		if ( bTransmitData )
 		{
 			CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
 			pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_WRITE);
 			pResult->SetByteCount(ulBytesWritten);
-			pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+			pResult->SetWaitCount(nReadWriteDelay);
 			pResult->SetDuration(dSeconds);
 			CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 		}
@@ -252,7 +258,7 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 			break;
 
 		//sleep for given interval and check every second if we should end...
-		for (unsigned long i = 0; i < pTestConfig->GetReadWriteDelay(); i++){
+		for (unsigned long i = 0; i < nReadWriteDelay; i++){
 
 			usleep(900 * 1000);
 			i++;
