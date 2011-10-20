@@ -13,14 +13,14 @@
 class CSolidSBCTestResultMemory : public CSolidSBCTestResult
 {
 public:
-	CSolidSBCTestResultMemory() : CSolidSBCTestResult("testLib_MemoryResults") {};
-	virtual ~CSolidSBCTestResultMemory() {};
+	CSolidSBCTestResultMemory() : CSolidSBCTestResult("testLib_MemoryResults") {}
+	virtual ~CSolidSBCTestResultMemory() {}
 
 	double GetMallocZeroDuration(void);
-	inline void SetMallocZeroDuration(double dMallocZeroDuration) { SetKeyValue( "malloczeroduration", dMallocZeroDuration); };
+	inline void SetMallocZeroDuration(double dMallocZeroDuration) { SetKeyValue( "malloczeroduration", dMallocZeroDuration); }
 
 	unsigned long  GetByteCount(void);
-	inline void SetByteCount(unsigned long ulBytes) { SetKeyValue( "bytes", ulBytes); };
+	inline void SetByteCount(unsigned long ulBytes) { SetKeyValue( "bytes", ulBytes); }
 };
 
 #endif /* CSOLIDSBCTESTRESULTMEMORY_H_ */

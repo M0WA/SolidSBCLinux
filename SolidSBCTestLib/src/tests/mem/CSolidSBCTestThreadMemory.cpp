@@ -7,16 +7,16 @@
 
 #include "CSolidSBCTestThreadMemory.h"
 #include "CSolidSBCTestConfigMemory.h"
+#include "CSolidSBCTestResultMemory.h"
 
 #include "../../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 #include "../../../../SolidSBCSDK/src/debug/CSolidSBCPerformanceCounter.h"
 
 #include "../../interface/CSolidSBCTestManagerImpl.h"
-#include "CSolidSBCTestResultMemory.h"
 
 #include "string.h"
 
-//TODO: disabling optimizing
+//TODO disable optimizations
 //#pragma optimize( "", off )
 
 CSolidSBCTestThreadMemory::CSolidSBCTestThreadMemory()
@@ -53,7 +53,6 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 			double dMallocZeroDuration = cMallocZeroCnt.Stop();
 
 			//send result
-			//TODO: !!!!!!!!!!!!!!! limit msg/seconds !!!!!!!!!!!!!!!!
 			if ( pTestConfig->GetTransmitData() )
 			{
 				CSolidSBCTestResultMemory* pMemResult = new CSolidSBCTestResultMemory();

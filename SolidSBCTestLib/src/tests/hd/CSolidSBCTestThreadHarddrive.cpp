@@ -7,9 +7,12 @@
 
 #include "CSolidSBCTestThreadHarddrive.h"
 #include "CSolidSBCTestConfigHarddrive.h"
+#include "CSolidSBCTestResultHarddrive.h"
 
 #include "../../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 #include "../../../../SolidSBCSDK/src/debug/CSolidSBCPerformanceCounter.h"
+
+#include "../../interface/CSolidSBCTestManagerImpl.h"
 
 #include <fcntl.h>
 #include <errno.h>
@@ -27,8 +30,8 @@
 #define SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE	1024 //4MB
 #define SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ	1024 //4MB
 //files for harddrive tests
-#define SSBC_TEST_HARDDRIVE_TMP_WRITE_FILE	"/opt/vmperflinux/write.dat"
-#define SSBC_TEST_HARDDRIVE_TMP_READ_FILE	"/opt/vmperflinux/read.dat"
+#define SSBC_TEST_HARDDRIVE_TMP_WRITE_FILE	"/opt/SolidSBC/write.dat"
+#define SSBC_TEST_HARDDRIVE_TMP_READ_FILE	"/opt/SolidSBC/read.dat"
 ////////////////////////////////////////////////////////////////////////
 
 CSolidSBCTestThreadHarddrive::CSolidSBCTestThreadHarddrive()
@@ -118,18 +121,15 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 	//stop measuring
 	dSeconds = cntTime.Stop();
 
+	//send result
 	if ( pTestConfig->GetTransmitData() )
 	{
-		//TODO: send result to server
-		/*
-		VMPERF_HD_TESTRESULT_PACKET packet;
-		packet.nType    = VMPERF_TEST_HARDDRIVE_RESULT_TYPE_READ_INIT;
-		packet.ulBytes  = ulReadBytes;
-		packet.ulWait	= pProfile->nHDCfgReadWriteDelay;
-		packet.dSeconds = dSeconds;
-
-		pThreadParam->pcResultStack->AddTestResult( (void*)&packet, VMPERF_HD_TESTRESULT_PACKET_TYPE );
-		*/
+		CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
+		pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_READ_INIT);
+		pResult->SetByteCount(ulReadBytes);
+		pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+		pResult->SetDuration(dSeconds);
+		CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 	}
 
 	while ( !pThread->ShallEnd() )
@@ -156,19 +156,15 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 		//stop measuring
 		dSeconds = cntTime.Stop();
 
-		//tell result to dialog
+		//send result
 		if ( pTestConfig->GetTransmitData() )
 		{
-			//TODO: send result to server
-			/*
-			VMPERF_HD_TESTRESULT_PACKET packet;
-			packet.nType    = VMPERF_TEST_HARDDRIVE_RESULT_TYPE_READ;
-			packet.ulBytes  = ulReadBytes;
-			packet.ulWait	= pProfile->nHDCfgReadWriteDelay;
-			packet.dSeconds = dSeconds;
-
-			pThreadParam->pcResultStack->AddTestResult( (void*)&packet, VMPERF_HD_TESTRESULT_PACKET_TYPE );
-			*/
+			CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
+			pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_READ);
+			pResult->SetByteCount(ulReadBytes);
+			pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+			pResult->SetDuration(dSeconds);
+			CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 		}
 
 		//end thread?
@@ -236,18 +232,15 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 		//stop measuring
 		dSeconds = cntTime.Stop();
 
+		//send result
 		if ( pTestConfig->GetTransmitData() )
 		{
-			//TODO: send result to server
-			/*
-			VMPERF_HD_TESTRESULT_PACKET packet;
-			packet.nType    = VMPERF_TEST_HARDDRIVE_RESULT_TYPE_WRITE;
-			packet.ulBytes  = ulBytesWritten;
-			packet.ulWait	 = pProfile->nHDCfgReadWriteDelay;
-			packet.dSeconds = dSeconds;
-
-			pThreadParam->pcResultStack->AddTestResult( (void*)&packet, VMPERF_HD_TESTRESULT_PACKET_TYPE );
-			*/
+			CSolidSBCTestResultHarddrive* pResult = new CSolidSBCTestResultHarddrive();
+			pResult->SetResultType(CSolidSBCTestResultHarddrive::SSBC_TEST_HARDDRIVE_RESULT_TYPE_WRITE);
+			pResult->SetByteCount(ulBytesWritten);
+			pResult->SetWaitCount(pTestConfig->GetReadWriteDelay());
+			pResult->SetDuration(dSeconds);
+			CSolidSBCTestManagerImpl::GetInstance()->AddResult(pResult);
 		}
 
 		//end thread?
