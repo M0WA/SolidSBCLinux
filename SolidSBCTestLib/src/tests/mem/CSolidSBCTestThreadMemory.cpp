@@ -32,10 +32,12 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 	CSolidSBCThread::PSSBC_THREAD_PARAM pThreadParam = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(pParam);
 	CSolidSBCTestConfigMemory*          pTestConfig  = reinterpret_cast<CSolidSBCTestConfigMemory*>(pThreadParam->pParam);
 
+	unsigned int nMaxMemSize = pTestConfig->GetMaxMem();
+	unsigned int nMinMemSize = pTestConfig->GetMinMem();
+	bool bTransmitData = pTestConfig->GetTransmitData();
+
 	if(pTestConfig->GetRandomize())
 	{
-		unsigned int nMaxMemSize = pTestConfig->GetMaxMem();
-		unsigned int nMinMemSize = pTestConfig->GetMinMem();
 		unsigned int nDiff = nMaxMemSize - nMinMemSize;
 		unsigned int number, nRandomNumber;
 
@@ -53,7 +55,7 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 			double dMallocZeroDuration = cMallocZeroCnt.Stop();
 
 			//send result
-			if ( pTestConfig->GetTransmitData() )
+			if ( bTransmitData )
 			{
 				CSolidSBCTestResultMemory* pMemResult = new CSolidSBCTestResultMemory();
 				pMemResult->SetByteCount(ulMallocZeroBytes);
@@ -82,15 +84,12 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 	}
 	else
 	{
-		unsigned int nMaxMemSize = pTestConfig->GetMaxMem();
 		char* pMem = new char[nMaxMemSize];
-
 		while( !pThreadParam->pInstance->ShallEnd() )
 		{
 			memset(pMem,0x00,nMaxMemSize);
 			usleep(100 * 1000);
 		}
-
 		delete [] pMem;
 	}
 	return 0;
