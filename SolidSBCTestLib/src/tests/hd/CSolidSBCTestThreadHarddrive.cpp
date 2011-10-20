@@ -96,6 +96,8 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ] = {0};
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ);
 
+	//TODO: cache config parameters here
+
 	double dSeconds = 0.0f;
 	CSolidSBCPerformanceCounter cntTime;
 
@@ -199,6 +201,8 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 	unsigned int number = 0;
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE];
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE);
+
+	//TODO: cache config parameters here
 
 	while ( !pThread->ShallEnd() )
 	{

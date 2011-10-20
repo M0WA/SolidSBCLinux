@@ -41,6 +41,8 @@ void* CSolidSBCTestThreadCpu::ThreadFunc(void* pParam)
 	CSolidSBCTestConfigCpu*             pTestConfig  = reinterpret_cast<CSolidSBCTestConfigCpu*>(pThreadParam->pParam);
 	CSolidSBCThread*                    pThread      = reinterpret_cast<CSolidSBCThread*>(pThreadParam->pInstance);
 
+	unsigned int nMaxRand = pTestConfig->GetMaxRand();
+
 	//randomize cpu usage
 	if (pTestConfig->GetRandomize()){
 		unsigned int number = 0, nRandomNumber = 0;
@@ -49,7 +51,7 @@ void* CSolidSBCTestThreadCpu::ThreadFunc(void* pParam)
 		{
 			//how long should the pause interval last?
 			number = rand( );
-			nRandomNumber = number % (pTestConfig->GetMaxRand()+1);
+			nRandomNumber = number % (nMaxRand+1);
 
 			//make some pause before using cpu power, check for exit every second
 			for ( unsigned int i = 0; i < nRandomNumber; i++ ){
@@ -64,7 +66,7 @@ void* CSolidSBCTestThreadCpu::ThreadFunc(void* pParam)
 
 			//how long shall cpu-intensive interval last?;
 			number = rand( );
-			nRandomNumber = number % (pTestConfig->GetMaxRand()+1);
+			nRandomNumber = number % (nMaxRand+1);
 			nRandomNumber *= 1000;
 
 			//use some cpu power
