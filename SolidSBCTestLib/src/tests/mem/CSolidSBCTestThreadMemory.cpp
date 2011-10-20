@@ -31,6 +31,7 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 {
 	CSolidSBCThread::PSSBC_THREAD_PARAM pThreadParam = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(pParam);
 	CSolidSBCTestConfigMemory*          pTestConfig  = reinterpret_cast<CSolidSBCTestConfigMemory*>(pThreadParam->pParam);
+	CSolidSBCThread*                    pThread      = reinterpret_cast<CSolidSBCThread*>(pThreadParam->pInstance);
 
 	//cache config parameters to save overhead parsing xml each
 	//time requested
@@ -73,21 +74,21 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 			unsigned long  dwMilliSeconds = ((unsigned long)dSeconds) % (1000 + 1);
 			for (unsigned long i = 0; i < (unsigned long)dSeconds; i++)
 			{
-				if ( pThreadParam->pInstance->ShallEnd() )
+				if ( pThread->ShallEnd() )
 					break;
 				usleep(970 * 1000);
 			}
 			usleep(dwMilliSeconds * 1000);
 			delete pMem;
 
-			if ( pThreadParam->pInstance->ShallEnd() )
+			if ( pThread->ShallEnd() )
 				break;
 		}
 	}
 	else
 	{
 		char* pMem = new char[nMaxMemSize];
-		while( !pThreadParam->pInstance->ShallEnd() )
+		while( !pThread->ShallEnd() )
 		{
 			memset(pMem,0x00,nMaxMemSize);
 			usleep(100 * 1000);
