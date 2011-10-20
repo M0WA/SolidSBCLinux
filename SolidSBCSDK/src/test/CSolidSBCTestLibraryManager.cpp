@@ -20,6 +20,7 @@ CSolidSBCTestLibraryManager::CSolidSBCTestLibraryManager(const std::string& sLib
 , m_pResultSocket(0)
 {
 	m_pResultThread = new CSolidSBCThread((CSolidSBCThread::ThreadFunction)&CSolidSBCTestLibraryManager::ResultThread, this, true);
+	m_pResultThread->StartThread();
 
 	g_pTestLibraryManagerInstance = this;
 	LoadAllLibraries();
@@ -166,7 +167,7 @@ void* CSolidSBCTestLibraryManager::ResultThread(void* param)
 		}
 
 		if(!nFetchedResults)
-			sleep(150);
+			usleep(150 * 1000);
 	}
 	return 0;
 }
