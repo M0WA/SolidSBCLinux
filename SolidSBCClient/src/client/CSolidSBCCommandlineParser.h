@@ -35,6 +35,10 @@ public:
 	std::string GetLogFile()		  const {return m_sLogFile;}
 	std::string GetUuidFile()		  const {return m_sUuidFile;}
 
+
+	unsigned int GetConfigConnectionTimeout() const {return m_nConfigConnectionTimeout;}
+	unsigned int GetResultConnectionTimeout() const {return m_nResultConnectionTimeout;}
+
 private:
 	std::string m_sConfigServerHost;
 	short       m_nConfigServerPort;
@@ -47,6 +51,9 @@ private:
 	bool        m_bAutoReconnect;
 	std::string m_sLogFile;
 	std::string m_sUuidFile;
+
+	unsigned int m_nConfigConnectionTimeout;
+	unsigned int m_nResultConnectionTimeout;
 
 	template<class Tvalue>
 	bool GetCmdLineParam( const std::string& strKey, Tvalue& value, const int argc, const char** argv ) const

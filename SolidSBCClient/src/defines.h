@@ -23,6 +23,10 @@
 #endif
 #define SSBC_DEFAULT_UUID_FILE    "ssbc.uuid"
 
+#define SSBC_DEFAULT_CONFIG_TIMEOUT 15 //in seconds
+#define SSBC_DEFAULT_RESULT_TIMEOUT 15 //in seconds
+
+
 #define SSBC_RETRY_RESTART_COUNT_MAX 3
 
 #endif /* DEFINES_H_ */

@@ -121,3 +121,12 @@ CSolidSBCTestLibraryManager* CSolidSBCTestLibraryManager::GetInstance(void)
 {
 	return g_pTestLibraryManagerInstance;
 }
+
+void CSolidSBCTestLibraryManager::StopAllTests(void)
+{
+	std::map<CSolidSBCTestManager*,void*>::iterator iIter = m_mapTestManagerLibHandle.begin();
+	for(; iIter != m_mapTestManagerLibHandle.end(); iIter++)
+	{
+		iIter->first->StopAllTests();
+	}
+}

@@ -25,6 +25,7 @@ public:
 	void UnloadAllLibraries (void);
 	void LoadAllLibraries   (void);
 	bool StartTestFromConfig(const std::string& sConfigXml);
+	void StopAllTests(void);
 
 	static CSolidSBCTestLibraryManager* GetInstance(void);
 

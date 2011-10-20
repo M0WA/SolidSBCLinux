@@ -20,6 +20,8 @@ CSolidSBCCommandlineParser::CSolidSBCCommandlineParser()
 , m_bAutoReconnect(false)
 , m_sLogFile("")
 , m_sUuidFile(SSBC_DEFAULT_UUID_FILE)
+, m_nConfigConnectionTimeout(SSBC_DEFAULT_CONFIG_TIMEOUT)
+, m_nResultConnectionTimeout(SSBC_DEFAULT_RESULT_TIMEOUT)
 {
 }
 

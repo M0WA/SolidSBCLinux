@@ -58,7 +58,7 @@ bool CSolidSBCClient::Start(void)
 
 void CSolidSBCClient::Stop(void)
 {
-	//TODO: CSolidSBCTestManager::GetInstance()->StopAllTests();
+	CSolidSBCTestLibraryManager::GetInstance()->StopAllTests();
 }
 
 void CSolidSBCClient::OnShutdown(void)
@@ -104,24 +104,22 @@ bool CSolidSBCClient::StartConfigConnection(void)
 		(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_WAIT)
 	   )
 	{
-		int nTimeout = 30; //wait 30 sec max to receive configs
+		int nTimeout = GetConfigConnectionTimeout();
 		while (!m_configSocket.IsInitialized() && nTimeout) {
 			sleep(1);
 			nTimeout--;}
 
-		if(!m_configSocket.IsInitialized())
-			m_configSocket.Close();
-
-		std::vector<std::string> vecTestConfigStrings =  m_configSocket.GetTestConfigStrings();
-		if (!vecTestConfigStrings.size()) {
-			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
-			return false; }
-
-		return true;
+		if(m_configSocket.IsInitialized())
+		{
+			std::vector<std::string> vecTestConfigStrings =  m_configSocket.GetTestConfigStrings();
+			if (vecTestConfigStrings.size()) {
+				return true; }
+		}
 	}
-	else {
-		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
-		return false;}
+
+	m_configSocket.Close();
+	g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
+	return false;
 }
 
 bool CSolidSBCClient::StartResultConnection(void)
@@ -137,21 +135,21 @@ bool CSolidSBCClient::StartResultConnection(void)
 			(CSolidSBCSocket::OnConnectCallback) &CSolidSBCSocketResult::OnConnect);
 
 	if (
-			(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_SUCCESS) ||
-			(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_WAIT)
-		   )
-		{
-			int nTimeout = 30; //wait 30 sec max to receive configs
-			while (!m_resultSocket.IsInitialized() && nTimeout) {
-				sleep(1);
-				nTimeout--;}
+		(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_SUCCESS) ||
+		(nState == CSolidSBCSocket::SSBC_SOCKET_CONNECT_STATE_WAIT)
+	   )
+	{
+		int nTimeout = GetResultConnectionTimeout();
+		while (!m_resultSocket.IsInitialized() && nTimeout) {
+			sleep(1);
+			nTimeout--;}
 
-			if(!m_resultSocket.IsInitialized())
-				m_resultSocket.Close();
+		if(m_resultSocket.IsInitialized()){
+			return true;}
 
-			return true;
-		}
-		else {
-			g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
-			return false;}
+	}
+
+	m_resultSocket.Close();
+	g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
+	return false;
 }
