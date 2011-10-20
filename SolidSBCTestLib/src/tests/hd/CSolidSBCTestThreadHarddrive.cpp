@@ -96,6 +96,8 @@ void* CSolidSBCTestThreadHarddrive::ReaderThread(void* pParam)
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ] = {0};
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_READ);
 
+	//cache config parameters to save overhead parsing xml each
+	//time requested
 	bool bTransmitData           = pTestConfig->GetTransmitData();
 	unsigned int nReadWriteDelay = pTestConfig->GetReadWriteDelay();
 	unsigned long lReadMax       = pTestConfig->GetReadMax();
@@ -205,6 +207,8 @@ void* CSolidSBCTestThreadHarddrive::WriterThread(void* pParam)
 	char pBytes[SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE];
 	memset(pBytes,0xFE,SSBC_TEST_HARDDRIVE_THREAD_BLOCKSIZE_WRITE);
 
+	//cache config parameters to save overhead parsing xml each
+	//time requested
 	bool bTransmitData           = pTestConfig->GetTransmitData();
 	unsigned int nReadWriteDelay = pTestConfig->GetReadWriteDelay();
 	bool bRandomWrite            = pTestConfig->GetRandomWrite();

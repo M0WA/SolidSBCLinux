@@ -41,6 +41,8 @@ void* CSolidSBCTestThreadCpu::ThreadFunc(void* pParam)
 	CSolidSBCTestConfigCpu*             pTestConfig  = reinterpret_cast<CSolidSBCTestConfigCpu*>(pThreadParam->pParam);
 	CSolidSBCThread*                    pThread      = reinterpret_cast<CSolidSBCThread*>(pThreadParam->pInstance);
 
+	//cache config parameters to save overhead parsing xml each
+	//time requested
 	unsigned int nMaxRand = pTestConfig->GetMaxRand();
 
 	//randomize cpu usage

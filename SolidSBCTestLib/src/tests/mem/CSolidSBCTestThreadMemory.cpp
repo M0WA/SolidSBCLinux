@@ -32,6 +32,8 @@ void* CSolidSBCTestThreadMemory::ThreadFunc(void* pParam)
 	CSolidSBCThread::PSSBC_THREAD_PARAM pThreadParam = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(pParam);
 	CSolidSBCTestConfigMemory*          pTestConfig  = reinterpret_cast<CSolidSBCTestConfigMemory*>(pThreadParam->pParam);
 
+	//cache config parameters to save overhead parsing xml each
+	//time requested
 	unsigned int nMaxMemSize = pTestConfig->GetMaxMem();
 	unsigned int nMinMemSize = pTestConfig->GetMinMem();
 	bool bTransmitData = pTestConfig->GetTransmitData();
