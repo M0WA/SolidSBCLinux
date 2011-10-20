@@ -8,7 +8,7 @@
 #ifndef CSOLIDSBCTESTCONFIGCPU_H_
 #define CSOLIDSBCTESTCONFIGCPU_H_
 
-#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
+#include "../../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
 class CSolidSBCTestConfigCpu : CSolidSBCTestConfig
 {

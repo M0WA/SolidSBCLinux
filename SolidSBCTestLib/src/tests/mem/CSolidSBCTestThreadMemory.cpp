@@ -8,10 +8,10 @@
 #include "CSolidSBCTestThreadMemory.h"
 #include "CSolidSBCTestConfigMemory.h"
 
-#include "../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
-#include "../../../SolidSBCSDK/src/debug/CSolidSBCPerformanceCounter.h"
+#include "../../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
+#include "../../../../SolidSBCSDK/src/debug/CSolidSBCPerformanceCounter.h"
 
-#include "../interface/CSolidSBCTestManagerImpl.h"
+#include "../../interface/CSolidSBCTestManagerImpl.h"
 #include "CSolidSBCTestResultMemory.h"
 
 #include "string.h"

@@ -6,7 +6,7 @@
  */
 
 #include "CSolidSBCTestConfigMemory.h"
-#include "testnames.h"
+#include "../testnames.h"
 
 CSolidSBCTestConfigMemory::CSolidSBCTestConfigMemory(const std::string& sXmlString)
 : CSolidSBCTestConfig(SSBC_MEMORY_TEST_NAME,sXmlString)

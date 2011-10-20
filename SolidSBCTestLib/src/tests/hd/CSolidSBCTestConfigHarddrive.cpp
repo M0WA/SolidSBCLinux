@@ -5,7 +5,7 @@
  *      Author: Moritz Wagner
  */
 
-#include "testnames.h"
+#include "../testnames.h"
 #include "CSolidSBCTestConfigHarddrive.h"
 
 CSolidSBCTestConfigHarddrive::CSolidSBCTestConfigHarddrive(const std::string& sXmlConfig)

@@ -6,7 +6,7 @@
  */
 
 #include "CSolidSBCTestConfigCpuMeasure.h"
-#include "testnames.h"
+#include "../testnames.h"
 
 CSolidSBCTestConfigCpuMeasure::CSolidSBCTestConfigCpuMeasure(const std::string& sXmlString)
 : CSolidSBCTestConfig(SSBC_CPUMEASURE_TEST_NAME,sXmlString)

@@ -8,7 +8,7 @@
 #ifndef CSOLIDSBCTESTRESULTMEMORY_H_
 #define CSOLIDSBCTESTRESULTMEMORY_H_
 
-#include "../../../SolidSBCSDK/src/test/CSolidSBCTestResult.h"
+#include "../../../../SolidSBCSDK/src/test/CSolidSBCTestResult.h"
 
 class CSolidSBCTestResultMemory : public CSolidSBCTestResult
 {

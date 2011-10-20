@@ -8,8 +8,8 @@
 
 #include "../tests/testnames.h"
 
-#include "../tests/CSolidSBCTestConfigMemory.h"
-#include "../tests/CSolidSBCTestThreadMemory.h"
+#include "../tests/mem/CSolidSBCTestConfigMemory.h"
+#include "../tests/mem/CSolidSBCTestThreadMemory.h"
 
 CSolidSBCTestManagerImpl g_cTestManagerImpl;
 

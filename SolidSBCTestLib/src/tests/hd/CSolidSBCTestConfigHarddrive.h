@@ -5,7 +5,7 @@
  *      Author: Moritz Wagner
  */
 
-#include "../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
+#include "../../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
 #ifndef CSOLIDSBCTESTCONFIGHARDDRIVE_H_
 #define CSOLIDSBCTESTCONFIGHARDDRIVE_H_
