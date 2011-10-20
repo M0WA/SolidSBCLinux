@@ -14,6 +14,8 @@
 #include "CSolidSBCTestThread.h"
 #include "CSolidSBCTestConfig.h"
 
+#include "../../../SolidSBCSDK/src/thread/CSolidSBCMutex.h"
+#include "../../../SolidSBCSDK/src/thread/CSolidSBCAutoMutex.h"
 #include "../../../SolidSBCSDK/src/net/CSolidSBCSocketResult.h"
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
 
@@ -23,7 +25,8 @@ public:
 	CSolidSBCTestLibraryManager(const std::string& sLibraryPath);
 	virtual ~CSolidSBCTestLibraryManager();
 
-	void SetResultConnection(CSolidSBCSocketResult* pResultSocket) {m_pResultSocket = pResultSocket;}
+	void SetResultConnection(CSolidSBCSocketResult* pResultSocket) {CSolidSBCAutoMutex lockSocket(m_cResultSocketMutex);
+	                                                                m_pResultSocket = pResultSocket;}
 
 	void UnloadAllLibraries (void);
 	void LoadAllLibraries   (void);
@@ -42,7 +45,7 @@ private:
 
 	CSolidSBCThread*             m_pResultThread;
 
-	//TODO: make m_pResultSocket thread safe
+	CSolidSBCMutex               m_cResultSocketMutex;
 	CSolidSBCSocketResult*       m_pResultSocket;
 };
 

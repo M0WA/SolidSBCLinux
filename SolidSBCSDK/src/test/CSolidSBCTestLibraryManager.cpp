@@ -147,6 +147,7 @@ void* CSolidSBCTestLibraryManager::ResultThread(void* param)
 	{
 		int nFetchedResults = 0;
 
+		pManager->m_cResultSocketMutex.Lock();
 		if(pManager->m_pResultSocket)
 		{
 			std::map<CSolidSBCTestManager*,void*>::iterator iIter = pManager->m_mapTestManagerLibHandle.begin();
@@ -165,6 +166,7 @@ void* CSolidSBCTestLibraryManager::ResultThread(void* param)
 				}
 			}
 		}
+		pManager->m_cResultSocketMutex.Unlock();
 
 		if(!nFetchedResults)
 			usleep(150 * 1000);
