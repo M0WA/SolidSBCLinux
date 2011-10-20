@@ -35,7 +35,6 @@ public:
 	std::string GetLogFile()		  const {return m_sLogFile;}
 	std::string GetUuidFile()		  const {return m_sUuidFile;}
 
-
 	unsigned int GetConfigConnectionTimeout() const {return m_nConfigConnectionTimeout;}
 	unsigned int GetResultConnectionTimeout() const {return m_nResultConnectionTimeout;}
 

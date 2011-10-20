@@ -7,11 +7,19 @@
 
 #include "CSolidSBCPacketTestResult.h"
 
-CSolidSBCPacketTestResult::CSolidSBCPacketTestResult() {
-	// TODO Auto-generated constructor stub
+#include <string>
+
+CSolidSBCPacketTestResult::CSolidSBCPacketTestResult(CSolidSBCTestResult* pResult)
+: CSolidSBCPacketXml(SSBC_PACKET_TYPE_RESULT)
+{
+	std::string sXmlPacket =
+		"<TestResult>\n"
+		"\t" + pResult->ToSQL() +
+		"</TestResult>";
+	ParseXml(sXmlPacket);
 
 }
 
-CSolidSBCPacketTestResult::~CSolidSBCPacketTestResult() {
-	// TODO Auto-generated destructor stub
+CSolidSBCPacketTestResult::~CSolidSBCPacketTestResult()
+{
 }

@@ -13,11 +13,10 @@
 #include <vector>
 
 
-#include "CSolidSBCTestThread.h"
 #include "CSolidSBCTestConfig.h"
 #include "CSolidSBCTestResult.h"
+#include "CSolidSBCTestThread.h"
 
-#include "../thread/CSolidSBCThread.h"
 #include "../thread/CSolidSBCMutex.h"
 
 class CSolidSBCTestManager
@@ -37,13 +36,12 @@ public:
 	void StopAllTests(void);
 
 	void AddResult(CSolidSBCTestResult* pResult);
+	int  FetchResults(std::vector<CSolidSBCTestResult*>& vecTestResults);
 
 protected:
 	void RegisterTest(CSolidSBCThread::ThreadFunction pThreadFunc, CSolidSBCTestConfig* pTestConfig);
 
 private:
-	static void* ResultThread(void* param);
-
 	bool GetTestConfigByName(const std::string& sTestName, std::pair<std::string,CSolidSBCTestConfig*>& pairTestNameConfig) const;
 	bool GetTestThreadByName(const std::string& sTestName, std::pair<std::string,CSolidSBCThread::ThreadFunction>& pairTestNameThreadFunc) const;
 
@@ -53,8 +51,6 @@ private:
 
 	CSolidSBCMutex                                        m_cResultMutex;
 	std::vector<CSolidSBCTestResult*>                     m_vecTestResults;
-
-	CSolidSBCThread*                                      m_pResultThread;
 };
 
 #endif /* CSOLIDSBCTESTMANAGER_H_ */

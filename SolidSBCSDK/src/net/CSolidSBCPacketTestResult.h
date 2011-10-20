@@ -5,15 +5,16 @@
  *      Author: Moritz Wagner
  */
 
-#include "CSolidSBCPacket.h"
+#include "CSolidSBCPacketXml.h"
+#include "../test/CSolidSBCTestResult.h"
 
 #ifndef CSOLIDSBCPACKETTESTRESULT_H_
 #define CSOLIDSBCPACKETTESTRESULT_H_
 
-class CSolidSBCPacketTestResult : public CSolidSBCPacket
+class CSolidSBCPacketTestResult : public CSolidSBCPacketXml
 {
 public:
-	CSolidSBCPacketTestResult();
+	CSolidSBCPacketTestResult(CSolidSBCTestResult* pResult);
 	virtual ~CSolidSBCPacketTestResult();
 };
 

@@ -145,6 +145,7 @@ bool CSolidSBCClient::StartResultConnection(void)
 			nTimeout--;}
 
 		if(m_resultSocket.IsInitialized()){
+			CSolidSBCTestLibraryManager::GetInstance()->SetResultConnection(&m_resultSocket);
 			return true;}
 
 	}

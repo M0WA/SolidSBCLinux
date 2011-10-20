@@ -7,6 +7,7 @@
 
 #include "CSolidSBCTestLibraryManager.h"
 #include "../log/CSolidSBCLogging.h"
+#include "../net/CSolidSBCPacketTestResult.h"
 
 #include <dirent.h>
 #include <dlfcn.h>
@@ -16,7 +17,10 @@ CSolidSBCTestLibraryManager* g_pTestLibraryManagerInstance = 0;
 
 CSolidSBCTestLibraryManager::CSolidSBCTestLibraryManager(const std::string& sLibraryPath)
 : m_sLibraryPath(sLibraryPath)
+, m_pResultSocket(0)
 {
+	m_pResultThread = new CSolidSBCThread((CSolidSBCThread::ThreadFunction)&CSolidSBCTestLibraryManager::ResultThread, this, true);
+
 	g_pTestLibraryManagerInstance = this;
 	LoadAllLibraries();
 }
@@ -25,6 +29,8 @@ CSolidSBCTestLibraryManager::~CSolidSBCTestLibraryManager()
 {
 	UnloadAllLibraries();
 	g_pTestLibraryManagerInstance = 0;
+
+	m_pResultThread->StopThread();
 }
 
 void CSolidSBCTestLibraryManager::UnloadAllLibraries(void)
@@ -32,8 +38,7 @@ void CSolidSBCTestLibraryManager::UnloadAllLibraries(void)
 	std::map<CSolidSBCTestManager*,void*>::iterator iIter =	m_mapTestManagerLibHandle.begin();
 	for(;iIter != m_mapTestManagerLibHandle.end(); iIter++)
 	{
-		//TODO: stop all test before unloading of library
-		//iIter->first->StopAllTest();
+		iIter->first->StopAllTests();
 		dlclose(iIter->second);
 	}
 	m_mapTestManagerLibHandle.clear();
@@ -129,4 +134,39 @@ void CSolidSBCTestLibraryManager::StopAllTests(void)
 	{
 		iIter->first->StopAllTests();
 	}
+}
+
+void* CSolidSBCTestLibraryManager::ResultThread(void* param)
+{
+	CSolidSBCThread::PSSBC_THREAD_PARAM pParam   = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(param);
+	CSolidSBCTestLibraryManager*        pManager = reinterpret_cast<CSolidSBCTestLibraryManager*>(pParam->pParam);
+	CSolidSBCThread*                    pThread  = reinterpret_cast<CSolidSBCThread*>(pParam->pInstance);
+
+	while(pThread && !pThread->ShallEnd())
+	{
+		int nFetchedResults = 0;
+
+		if(pManager->m_pResultSocket)
+		{
+			std::map<CSolidSBCTestManager*,void*>::iterator iIter = pManager->m_mapTestManagerLibHandle.begin();
+			for(; iIter != pManager->m_mapTestManagerLibHandle.end(); iIter++)
+			{
+				std::vector<CSolidSBCTestResult*> vecResults;
+				nFetchedResults += iIter->first->FetchResults(vecResults);
+
+				std::vector<CSolidSBCTestResult*>::iterator i = vecResults.begin();
+				for(; i != vecResults.end(); i++)
+				{
+					CSolidSBCTestResult* pResult = (*i);
+					CSolidSBCPacketTestResult resultPacket(pResult);
+					resultPacket.SendPacket(pManager->m_pResultSocket);
+					delete pResult;
+				}
+			}
+		}
+
+		if(!nFetchedResults)
+			sleep(150);
+	}
+	return 0;
 }

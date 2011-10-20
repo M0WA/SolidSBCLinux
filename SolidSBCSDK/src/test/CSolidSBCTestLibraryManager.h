@@ -14,6 +14,7 @@
 #include "CSolidSBCTestThread.h"
 #include "CSolidSBCTestConfig.h"
 
+#include "../../../SolidSBCSDK/src/net/CSolidSBCSocketResult.h"
 #include "../../../SolidSBCSDK/src/test/CSolidSBCTestManager.h"
 
 class CSolidSBCTestLibraryManager
@@ -21,6 +22,8 @@ class CSolidSBCTestLibraryManager
 public:
 	CSolidSBCTestLibraryManager(const std::string& sLibraryPath);
 	virtual ~CSolidSBCTestLibraryManager();
+
+	void SetResultConnection(CSolidSBCSocketResult* pResultSocket) {m_pResultSocket = pResultSocket;}
 
 	void UnloadAllLibraries (void);
 	void LoadAllLibraries   (void);
@@ -30,10 +33,17 @@ public:
 	static CSolidSBCTestLibraryManager* GetInstance(void);
 
 private:
+	static void* ResultThread(void* param);
+
 	bool TryLoadLibrary(const std::string& sLibraryFileName);
 
 	std::map<CSolidSBCTestManager*,void*> m_mapTestManagerLibHandle;
 	std::string                           m_sLibraryPath;
+
+	CSolidSBCThread*             m_pResultThread;
+
+	//TODO: make m_pResultSocket thread safe
+	CSolidSBCSocketResult*       m_pResultSocket;
 };
 
 #endif /* CSOLIDSBCTESTLIBRARYMANAGER_H_ */
