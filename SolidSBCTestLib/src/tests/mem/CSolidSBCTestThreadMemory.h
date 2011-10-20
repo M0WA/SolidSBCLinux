@@ -8,7 +8,8 @@
 #ifndef CSOLIDSBCTESTTHREADMEMORY_H_
 #define CSOLIDSBCTESTTHREADMEMORY_H_
 
-class CSolidSBCTestThreadMemory {
+class CSolidSBCTestThreadMemory
+{
 public:
 	CSolidSBCTestThreadMemory();
 	virtual ~CSolidSBCTestThreadMemory();
