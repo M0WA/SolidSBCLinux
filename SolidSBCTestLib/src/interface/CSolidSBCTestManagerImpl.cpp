@@ -8,6 +8,15 @@
 
 #include "../tests/testnames.h"
 
+#include "../tests/cpu/CSolidSBCTestConfigCpu.h"
+#include "../tests/cpu/CSolidSBCTestThreadCpu.h"
+
+#include "../tests/cpumeasure/CSolidSBCTestConfigCpuMeasure.h"
+#include "../tests/cpumeasure/CSolidSBCTestThreadCpuMeasure.h"
+
+#include "../tests/hd/CSolidSBCTestConfigHarddrive.h"
+#include "../tests/hd/CSolidSBCTestThreadHarddrive.h"
+
 #include "../tests/mem/CSolidSBCTestConfigMemory.h"
 #include "../tests/mem/CSolidSBCTestThreadMemory.h"
 
@@ -16,7 +25,10 @@ CSolidSBCTestManagerImpl g_cTestManagerImpl;
 CSolidSBCTestManagerImpl::CSolidSBCTestManagerImpl()
 : CSolidSBCTestManager()
 {
-	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc, new CSolidSBCTestConfigMemory(""));
+	RegisterTest(CSolidSBCTestThreadCpu::ThreadFunc       , new CSolidSBCTestConfigCpu(""));
+	RegisterTest(CSolidSBCTestThreadCpuMeasure::ThreadFunc, new CSolidSBCTestConfigCpuMeasure(""));
+	RegisterTest(CSolidSBCTestThreadHarddrive::ThreadFunc , new CSolidSBCTestConfigHarddrive(""));
+	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc    , new CSolidSBCTestConfigMemory(""));
 }
 
 CSolidSBCTestManagerImpl::~CSolidSBCTestManagerImpl()

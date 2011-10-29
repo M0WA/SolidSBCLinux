@@ -10,7 +10,7 @@
 
 #include "../../../../SolidSBCSDK/src/test/CSolidSBCTestConfig.h"
 
-class CSolidSBCTestConfigCpuMeasure : CSolidSBCTestConfig
+class CSolidSBCTestConfigCpuMeasure : public CSolidSBCTestConfig
 {
 public:
 	CSolidSBCTestConfigCpuMeasure(const std::string& sXmlString = "");

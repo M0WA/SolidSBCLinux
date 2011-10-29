@@ -10,7 +10,7 @@
 #ifndef CSOLIDSBCTESTCONFIGHARDDRIVE_H_
 #define CSOLIDSBCTESTCONFIGHARDDRIVE_H_
 
-class CSolidSBCTestConfigHarddrive : CSolidSBCTestConfig
+class CSolidSBCTestConfigHarddrive : public CSolidSBCTestConfig
 {
 public:
 	CSolidSBCTestConfigHarddrive(const std::string& sXmlConfig);
