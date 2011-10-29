@@ -100,21 +100,22 @@ protected:
 	CSolidSBCSocket(const int nSocketFamily = AF_INET, const int nSocketType = SOCK_STREAM);
 
 public:
+	void SetNoSigPipe(bool bSet = true);
+
 	virtual ~CSolidSBCSocket();
 	virtual void Close(void);
 
 	virtual _SSBC_SOCKET_CONNECT_STATE Connect(const std::string& sHost, const short nPort, OnConnectCallback pCallback = 0);
-
-protected:
-
-	void Read(OnReadCallback pCallback, int nReadBytes = 0);
-	int  Send(unsigned char* pcPacket,  int nSendBytes);
 
 	bool IsWritable(timeval* timeout);
 	bool IsWritable(const bool bBlocking = false);
 
 	bool IsReadable(timeval* timeout);
 	bool IsReadable(const bool bBlocking = false);
+
+protected:
+	void Read(OnReadCallback pCallback, int nReadBytes = 0);
+	int  Send(unsigned char* pcPacket,  int nSendBytes);
 
 private:
 	void SetBlockingMode( const bool bIsBlocking );
@@ -132,6 +133,8 @@ private:
 	int m_nSocketType;
 
 	int m_hSocket;
+	int m_nSendFlags;
+	int m_nRecvFlags;
 };
 
 #endif /* CSOLIDSBCSOCKET_H_ */

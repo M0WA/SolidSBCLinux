@@ -19,6 +19,7 @@
 #define _SSBC_ERR_UNGRACEFUL_SHUTDOWN			"received SIGKILL, not shutting down gracefully."
 #define _SSBC_ERR_INVALID_TESTLIB_DIR			"could not find test library directory"
 #define _SSBC_ERR_COULD_NOT_START_CLIENT		"could not start client, exiting."
+#define _SSBC_ERR_CONN_LOST						"connection to server lost, exiting."
 
 //warnings
 #define _SSBC_WARN_SOCKET_STILL_CONNECTED     	"socket already connected, closing previous connection"

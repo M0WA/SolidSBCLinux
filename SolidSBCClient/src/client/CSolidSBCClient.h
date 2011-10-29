@@ -34,6 +34,8 @@ public:
 	std::string GetClientName(void) const { return CSolidSBCHostName::GetHostName(); };
 	std::string GetUuid(void)       const { return m_pUuidManager ? m_pUuidManager->GetUuid() : ""; };
 
+	bool CheckConnection(void);
+
 	static CSolidSBCClient* GetInstance(void);
 
 private:

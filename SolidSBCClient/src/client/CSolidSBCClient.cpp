@@ -153,3 +153,11 @@ bool CSolidSBCClient::StartResultConnection(void)
 	g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_SOCKET_CONNECT_FAILED);
 	return false;
 }
+
+bool CSolidSBCClient::CheckConnection(void)
+{
+	if ( !m_resultSocket.IsWritable() )
+		return false;
+	else
+		return true;
+}

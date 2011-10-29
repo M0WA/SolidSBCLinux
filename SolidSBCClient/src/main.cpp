@@ -100,11 +100,22 @@ int main(int argc, char** argv)
 		g_cLogging.Log(_SSBC_LOG_WARN, _SSBC_WARN_RETRYING_TO_START);
 		nTry++; }
 
-	if(bError) {
-		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT); }
-	else {
+	if(bError)
+	{
+		g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_COULD_NOT_START_CLIENT);
+	}
+	else
+	{
 		while(!g_bEnd)
-			sleep(3);
+		{
+			sleep(5);
+			if ( !client.CheckConnection() )
+			{
+				g_cLogging.Log(_SSBC_LOG_ERROR, _SSBC_ERR_CONN_LOST);
+				client.Stop();
+				break;
+			}
+		}
 	}
 	return 0;
 }

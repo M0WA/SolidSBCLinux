@@ -143,6 +143,7 @@ void* CSolidSBCTestLibraryManager::ResultThread(void* param)
 	CSolidSBCTestLibraryManager*        pManager = reinterpret_cast<CSolidSBCTestLibraryManager*>(pParam->pParam);
 	CSolidSBCThread*                    pThread  = reinterpret_cast<CSolidSBCThread*>(pParam->pInstance);
 
+	bool bError = false;
 	while(pThread && !pThread->ShallEnd())
 	{
 		int nFetchedResults = 0;
@@ -161,12 +162,29 @@ void* CSolidSBCTestLibraryManager::ResultThread(void* param)
 				{
 					CSolidSBCTestResult* pResult = (*i);
 					CSolidSBCPacketTestResult resultPacket(pResult);
-					resultPacket.SendPacket(pManager->m_pResultSocket);
+					if ( !resultPacket.SendPacket(pManager->m_pResultSocket) )
+					{
+						pManager->m_pResultSocket->Close();
+						pManager->StopAllTests();
+						bError = true;
+					}
 					delete pResult;
+
+					if (bError)
+						break;
 				}
+
+				if (bError)
+					break;
 			}
+
+			if (bError)
+				break;
 		}
 		pManager->m_cResultSocketMutex.Unlock();
+
+		if (bError)
+			break;
 
 		if(!nFetchedResults)
 			usleep(150 * 1000);

@@ -11,6 +11,7 @@
 CSolidSBCSocketResult::CSolidSBCSocketResult()
 : m_bInitialized(false)
 {
+	SetNoSigPipe();
 }
 
 CSolidSBCSocketResult::~CSolidSBCSocketResult()

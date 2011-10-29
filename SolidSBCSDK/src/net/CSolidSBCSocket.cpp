@@ -24,6 +24,8 @@ CSolidSBCSocket::CSolidSBCSocket(int nSocketFamily, int nSocketType)
 : m_nSocketFamily(nSocketFamily)
 , m_nSocketType(nSocketType)
 , m_hSocket(-1)
+, m_nSendFlags(0)
+, m_nRecvFlags(0)
 {
 }
 
@@ -249,7 +251,7 @@ CSolidSBCSocket::_SSBC_SOCKET_READ_STATE CSolidSBCSocket::Read(_PSSBC_READ_SOCKE
 	}
 
 	pParam->pcSocket->SetBlockingMode( true );
-	int nRead = recv(hSocket, pParam->pBuffer, nBufferSize, 0);
+	int nRead = recv(hSocket, pParam->pBuffer, nBufferSize, pParam->pcSocket->m_nRecvFlags);
 	pParam->pcSocket->SetBlockingMode( false );
 
 	pParam->nReadBytes = nRead ? nRead : 0;
@@ -270,7 +272,7 @@ CSolidSBCSocket::_SSBC_SOCKET_READ_STATE CSolidSBCSocket::Read(_PSSBC_READ_SOCKE
 				memset(&pParam->pBuffer[pParam->nReadBytes],0,SOCKET_READ_BUFFER_SIZE);
 
 				pParam->pcSocket->SetBlockingMode( true );
-				int nSubRead = recv(hSocket, pParam->pBuffer, nBufferSize, 0);
+				int nSubRead = recv(hSocket, pParam->pBuffer, nBufferSize, pParam->pcSocket->m_nRecvFlags);
 				pParam->pcSocket->SetBlockingMode( false );
 				if (nSubRead <= 0)
 				{
@@ -381,5 +383,13 @@ void* CSolidSBCSocket::WaitForReadThread(CSolidSBCThread::PSSBC_THREAD_PARAM par
 
 int CSolidSBCSocket::Send(unsigned char* pcPacket, int nSendBytes)
 {
-	return send(m_hSocket,pcPacket,nSendBytes,0);
+	int nReturn = send(m_hSocket,pcPacket,nSendBytes,m_nSendFlags);
+	return (nReturn == nSendBytes) ? nSendBytes : -1;
 }
+
+void CSolidSBCSocket::SetNoSigPipe(bool bSet)
+{
+	m_nSendFlags = bSet ? MSG_NOSIGNAL : 0;
+	m_nRecvFlags = bSet ? MSG_NOSIGNAL : 0;
+}
+
