@@ -16,6 +16,30 @@ public:
 	CSolidSBCTestConfigNetPing(const std::string& sXmlString = "");
 	virtual ~CSolidSBCTestConfigNetPing();
 
+	//getter
+	unsigned int GetInterval(void);
+	std::string GetHost(void);
+	unsigned int GetTTL(void);
+	unsigned int GetPayloadSize(void);
+	bool GetTransmitData(void);
+
+
+	inline bool SetInterval(const unsigned int& nInterval)
+		{ return SetAttributeByName<unsigned int>("Interval", nInterval); }
+
+	/*
+	std::string strHost;
+	*/
+
+	inline bool SetTTL(const unsigned int& nTTL)
+		{ return SetAttributeByName<unsigned int>("TTL", nTTL); }
+
+	inline bool SetPayloadSize(const unsigned int& nPayloadSize)
+		{ return SetAttributeByName<unsigned int>("PayloadSize", nPayloadSize); }
+
+	inline bool SetTransmitData(const bool& bTransmitData)
+		{ return SetAttributeByName<bool>("TransmitData", bTransmitData); }
+
 protected:
 	void RegisterAttributes(void);
 };

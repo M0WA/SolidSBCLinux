@@ -20,6 +20,12 @@
 #include "../tests/mem/CSolidSBCTestConfigMemory.h"
 #include "../tests/mem/CSolidSBCTestThreadMemory.h"
 
+#include "../tests/netping/CSolidSBCTestConfigNetPing.h"
+#include "../tests/netping/CSolidSBCTestThreadNetPing.h"
+
+#include "../tests/nettcp/CSolidSBCTestConfigNetTCP.h"
+#include "../tests/nettcp/CSolidSBCTestThreadNetTCP.h"
+
 CSolidSBCTestManagerImpl g_cTestManagerImpl;
 
 CSolidSBCTestManagerImpl::CSolidSBCTestManagerImpl()
@@ -29,6 +35,8 @@ CSolidSBCTestManagerImpl::CSolidSBCTestManagerImpl()
 	RegisterTest(CSolidSBCTestThreadCpuMeasure::ThreadFunc, new CSolidSBCTestConfigCpuMeasure(""));
 	RegisterTest(CSolidSBCTestThreadHarddrive::ThreadFunc , new CSolidSBCTestConfigHarddrive(""));
 	RegisterTest(CSolidSBCTestThreadMemory::ThreadFunc    , new CSolidSBCTestConfigMemory(""));
+	RegisterTest(CSolidSBCTestThreadNetPing::ThreadFunc   , new CSolidSBCTestConfigNetPing(""));
+	RegisterTest(CSolidSBCTestThreadNetTCP::ThreadFunc    , new CSolidSBCTestConfigNetTCP(""));
 }
 
 CSolidSBCTestManagerImpl::~CSolidSBCTestManagerImpl()
