@@ -15,6 +15,9 @@ class CSolidSBCTestResultNetTCP : public CSolidSBCTestResult
 public:
 	CSolidSBCTestResultNetTCP() : CSolidSBCTestResult("testlib_NetTCPResults") {}
 	virtual ~CSolidSBCTestResultNetTCP() {}
+
+	double GetHandshakeDuration(void);
+	inline void SetHandshakeDuration(double dHandshakeDuration) { SetKeyValue( "handshake_duration", dHandshakeDuration); }
 };
 
 #endif /* CSOLIDSBCTESTRESULTNETTCP_H_ */

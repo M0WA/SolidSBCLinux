@@ -6,3 +6,11 @@
  */
 
 #include "CSolidSBCTestResultNetTCP.h"
+
+double CSolidSBCTestResultNetTCP::GetHandshakeDuration(void)
+{
+	std::string sKey = "handshake_duration";
+	unsigned long ulValue = 0;
+	GetKeyValue(sKey, ulValue, (unsigned long) 0);
+	return ulValue;
+}
