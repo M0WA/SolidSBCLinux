@@ -28,6 +28,7 @@ public:
 		{ return SetAttributeByName<unsigned int>("Interval", nInterval); }
 
 	/*
+	//TODO: set hostname
 	std::string strHost;
 	*/
 
