@@ -8,7 +8,22 @@
 #ifndef CSOLIDSBCTESTTHREADNETPING_H_
 #define CSOLIDSBCTESTTHREADNETPING_H_
 
-class CSolidSBCTestThreadNetPing {
+#include <string>
+
+class CPing
+{
+public:
+	CPing(void);
+	~CPing(void);
+	bool Ping( std::string strHost, unsigned int nTTL, unsigned int nPayloadSize );
+
+private:
+	bool CatchReplyPacket(int nSock, unsigned int nTTL);
+	unsigned short in_cksum(unsigned short *addr, int len);
+};
+
+class CSolidSBCTestThreadNetPing
+{
 public:
 	CSolidSBCTestThreadNetPing() {}
 	virtual ~CSolidSBCTestThreadNetPing() {}
