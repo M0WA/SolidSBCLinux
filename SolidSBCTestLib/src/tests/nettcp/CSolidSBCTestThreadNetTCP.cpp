@@ -6,16 +6,15 @@
  */
 
 #include "CSolidSBCTestThreadNetTCP.h"
+#include "CSolidSBCTestConfigNetTCP.h"
+#include "CSolidSBCTestResultNetTCP.h"
 
-CSolidSBCTestThreadNetTCP::CSolidSBCTestThreadNetTCP()
-{
-}
+#include "../../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 
-CSolidSBCTestThreadNetTCP::~CSolidSBCTestThreadNetTCP()
+void* CSolidSBCTestThreadNetTCP::ThreadFunc(void* pParam)
 {
-}
-
-void* CSolidSBCTestThreadNetTCP::ThreadFunc(void*)
-{
+	CSolidSBCThread::PSSBC_THREAD_PARAM pThreadParam = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(pParam);
+	CSolidSBCTestConfigNetTCP*          pTestConfig  = reinterpret_cast<CSolidSBCTestConfigNetTCP*>(pThreadParam->pParam);
+	CSolidSBCThread*                    pThread      = reinterpret_cast<CSolidSBCThread*>(pThreadParam->pInstance);
 	return 0;
 }

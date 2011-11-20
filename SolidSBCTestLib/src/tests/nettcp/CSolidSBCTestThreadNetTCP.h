@@ -8,10 +8,11 @@
 #ifndef CSOLIDSBCTESTTHREADNETTCP_H_
 #define CSOLIDSBCTESTTHREADNETTCP_H_
 
-class CSolidSBCTestThreadNetTCP {
+class CSolidSBCTestThreadNetTCP
+{
 public:
-	CSolidSBCTestThreadNetTCP();
-	virtual ~CSolidSBCTestThreadNetTCP();
+	CSolidSBCTestThreadNetTCP() {}
+	virtual ~CSolidSBCTestThreadNetTCP() {}
 
 	static void* ThreadFunc(void*);
 };

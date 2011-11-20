@@ -6,16 +6,15 @@
  */
 
 #include "CSolidSBCTestThreadNetPing.h"
+#include "CSolidSBCTestConfigNetPing.h"
+#include "CSolidSBCTestResultNetPing.h"
 
-CSolidSBCTestThreadNetPing::CSolidSBCTestThreadNetPing()
-{
-}
+#include "../../../../SolidSBCSDK/src/thread/CSolidSBCThread.h"
 
-CSolidSBCTestThreadNetPing::~CSolidSBCTestThreadNetPing()
+void* CSolidSBCTestThreadNetPing::ThreadFunc(void* pParam)
 {
-}
-
-void* CSolidSBCTestThreadNetPing::ThreadFunc(void*)
-{
+	CSolidSBCThread::PSSBC_THREAD_PARAM pThreadParam = reinterpret_cast<CSolidSBCThread::PSSBC_THREAD_PARAM>(pParam);
+	CSolidSBCTestConfigNetPing*         pTestConfig  = reinterpret_cast<CSolidSBCTestConfigNetPing*>(pThreadParam->pParam);
+	CSolidSBCThread*                    pThread      = reinterpret_cast<CSolidSBCThread*>(pThreadParam->pInstance);
 	return 0;
 }
