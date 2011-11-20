@@ -6,12 +6,3 @@
  */
 
 #include "CSolidSBCTestResultNetTCP.h"
-
-CSolidSBCTestResultNetTCP::CSolidSBCTestResultNetTCP() {
-	// TODO Auto-generated constructor stub
-
-}
-
-CSolidSBCTestResultNetTCP::~CSolidSBCTestResultNetTCP() {
-	// TODO Auto-generated destructor stub
-}

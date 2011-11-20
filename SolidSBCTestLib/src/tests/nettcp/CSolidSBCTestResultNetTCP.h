@@ -8,10 +8,13 @@
 #ifndef CSOLIDSBCTESTRESULTNETTCP_H_
 #define CSOLIDSBCTESTRESULTNETTCP_H_
 
-class CSolidSBCTestResultNetTCP {
+#include "../../../../SolidSBCSDK/src/test/CSolidSBCTestResult.h"
+
+class CSolidSBCTestResultNetTCP : public CSolidSBCTestResult
+{
 public:
-	CSolidSBCTestResultNetTCP();
-	virtual ~CSolidSBCTestResultNetTCP();
+	CSolidSBCTestResultNetTCP() : CSolidSBCTestResult("testlib_NetTCPResults") {}
+	virtual ~CSolidSBCTestResultNetTCP() {}
 };
 
 #endif /* CSOLIDSBCTESTRESULTNETTCP_H_ */

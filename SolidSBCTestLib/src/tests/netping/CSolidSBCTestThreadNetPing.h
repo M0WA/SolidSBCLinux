@@ -12,6 +12,8 @@ class CSolidSBCTestThreadNetPing {
 public:
 	CSolidSBCTestThreadNetPing();
 	virtual ~CSolidSBCTestThreadNetPing();
+
+	static void* ThreadFunc(void*);
 };
 
 #endif /* CSOLIDSBCTESTTHREADNETPING_H_ */

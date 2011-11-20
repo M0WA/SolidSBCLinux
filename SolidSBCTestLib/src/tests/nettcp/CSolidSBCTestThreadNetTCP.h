@@ -12,6 +12,8 @@ class CSolidSBCTestThreadNetTCP {
 public:
 	CSolidSBCTestThreadNetTCP();
 	virtual ~CSolidSBCTestThreadNetTCP();
+
+	static void* ThreadFunc(void*);
 };
 
 #endif /* CSOLIDSBCTESTTHREADNETTCP_H_ */

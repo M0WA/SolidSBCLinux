@@ -7,11 +7,15 @@
 
 #include "CSolidSBCTestThreadNetPing.h"
 
-CSolidSBCTestThreadNetPing::CSolidSBCTestThreadNetPing() {
-	// TODO Auto-generated constructor stub
-
+CSolidSBCTestThreadNetPing::CSolidSBCTestThreadNetPing()
+{
 }
 
-CSolidSBCTestThreadNetPing::~CSolidSBCTestThreadNetPing() {
-	// TODO Auto-generated destructor stub
+CSolidSBCTestThreadNetPing::~CSolidSBCTestThreadNetPing()
+{
+}
+
+void* CSolidSBCTestThreadNetPing::ThreadFunc(void*)
+{
+	return 0;
 }

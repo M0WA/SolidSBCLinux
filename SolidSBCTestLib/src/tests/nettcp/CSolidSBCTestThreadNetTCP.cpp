@@ -7,11 +7,15 @@
 
 #include "CSolidSBCTestThreadNetTCP.h"
 
-CSolidSBCTestThreadNetTCP::CSolidSBCTestThreadNetTCP() {
-	// TODO Auto-generated constructor stub
-
+CSolidSBCTestThreadNetTCP::CSolidSBCTestThreadNetTCP()
+{
 }
 
-CSolidSBCTestThreadNetTCP::~CSolidSBCTestThreadNetTCP() {
-	// TODO Auto-generated destructor stub
+CSolidSBCTestThreadNetTCP::~CSolidSBCTestThreadNetTCP()
+{
+}
+
+void* CSolidSBCTestThreadNetTCP::ThreadFunc(void*)
+{
+	return 0;
 }
